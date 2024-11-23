@@ -7,7 +7,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
     /*
      * /*
      * TC O(n)
-     * SC o(ns)
+     * SC o(n)
      */
      
     public int lengthOfLongestSubstring(String s) {
