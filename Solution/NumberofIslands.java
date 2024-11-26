@@ -23,7 +23,7 @@ public class NumberofIslands {
 
         int[][] tri ={{-1,0},{0,+1},{+1,0},{0,-1}};
         
-        while(qu.isEmpty()){
+        while(!qu.isEmpty()){
             int r =qu.peek().fr;
             int c =qu.peek().sc;
             qu.remove();
@@ -50,8 +50,9 @@ public class NumberofIslands {
                 System.out.print(vit[i][j]+" ");
                 if(vit[i][j]==0 && grid[i][j]=='1'){
                     count++;
-
+                    dfs(i,j,grid,vit);
                 }
+                System.out.println();
             }
         }
         return count;
