@@ -1,7 +1,7 @@
 package Solution;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class Permutations {
@@ -31,19 +31,23 @@ public class Permutations {
 
     public void resusion2(int[] nums,List<List<Integer>> ans, int ind){
         if(ind==nums.length){
-            
-            ans.add(Arrays.stream(int).boxed().toList());
+            List<Integer> ds =new ArrayList<>();
+            for(int i=0;i<nums.length;i++){
+                ds.add(nums[i]);
+            }
+            ans.add(ds);
             return;
         }
 
-        for(int i=0;i<nums.length;i++){
-            if(!feq[i]){
-                feq[i]=true;
-                ds.add(nums[i]);
-                resusion(nums, ans, ds, feq);
-                feq[i]=false;
-                ds.remove(ds.size()-1);
-            }
+        for(int i=ind;i<nums.length;i++){
+            int trmp =nums[ind];
+            nums[ind]=nums[i];
+            nums[i]=trmp;
+            resusion2(nums,ans,ind+1);
+            trmp =nums[ind];
+            nums[ind]=nums[i];
+            nums[i]=trmp;
+
         }
     }
 
