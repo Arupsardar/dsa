@@ -1,14 +1,8 @@
-import java.lang.annotation.Target;
+package Solution;
+
 import java.util.*;
 
-
-
-public class Main {
-    
-    public static void main(String[] args) {
-        
-    }
-
+public class CombinationSum {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans =new ArrayList();
         List<Integer> arr=new ArrayList<>();
@@ -35,8 +29,4 @@ public class Main {
         }
         combinationSum2(i+1,candidates,reminder,ans,arr);
     }
-
-    
-
-    
 }
