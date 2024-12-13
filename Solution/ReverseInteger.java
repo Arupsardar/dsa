@@ -1,6 +1,10 @@
 package Solution;
 
 public class ReverseInteger {
+    /*
+     * time Log(n);
+     * sc =o(1);
+     */
     public int reverse(int x) {
 
         int mul =0;
