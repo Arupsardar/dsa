@@ -1,5 +1,7 @@
 package Solution;
 
+import java.util.*;
+
 public class ZigzagConversion {
     public String convert(String s, int numRows) {
         String [] ans=new String[numRows];
@@ -25,4 +27,6 @@ public class ZigzagConversion {
         return as;
         
     }
+
+    
 }
