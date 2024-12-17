@@ -19,4 +19,7 @@ public class LongestCommonPrefix {
         return index==0? "":str1.substring(0, index);
         
     }
+
+
+    
 }
