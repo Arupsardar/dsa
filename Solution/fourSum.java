@@ -10,15 +10,14 @@ public class fourSum {
             List<Integer> arr =new ArrayList<>();
             int sum;
             for(int j=i;j<nums.length;j++){
-                sum =sum+nums[j];
-                if(sum==target){
-                    arr
-                }
+                
+                
 
             }
 
 
         }
+        return ans;
         
     }
 }
