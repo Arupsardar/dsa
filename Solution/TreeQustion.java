@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import strucher.Node;
 import strucher.TreeNode;
 
 public class TreeQustion {
@@ -42,5 +43,34 @@ public class TreeQustion {
         // Recur for left and right subtrees
         levelWiseSum(root.left, level + 1, levelSums);
         levelWiseSum(root.right, level + 1, levelSums);
+    }
+
+    /*
+     * 
+     589. N-ary Tree Preorder Traversal
+        Solved
+        Easy
+        Topics
+        Companies
+        Given the root of an n-ary tree, return the preorder traversal of its nodes' values.
+
+        Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)
+     */
+
+    public List<Integer> preorder(Node root) {
+        List<Integer> arr =new ArrayList<>();
+        preorder(root,arr);
+        return arr;
+
+    }
+    public void preorder(Node root,List<Integer> arr) {
+        if(root==null){
+            return;
+        }
+        arr.add(root.val);
+        for(int i=0;i<root.children.size();i++){
+            preorder(root.children.get(i),arr);
+        }
+
     }
 }
