@@ -73,4 +73,40 @@ public class TreeQustion {
         }
 
     }
+
+    /*
+     * 
+     429. N-ary Tree Level Order Traversal
+        Solved
+        Medium
+        Topics
+        Companies
+        Given an n-ary tree, return the level order traversal of its nodes' values.
+
+        Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+     */
+
+
+    public List<List<Integer>> levelOrder(Node root) {
+        List<List<Integer>>  ans =new ArrayList<>();
+        levelOrder(root,0,ans);
+        return ans;
+    }
+
+    public void levelOrder(Node root,int level,List<List<Integer>>  ans) {
+        if(root==null){
+            return;
+        }
+        if(ans.size()==level){
+            ans.add(new ArrayList<>());
+        }
+        List<Integer> arr =ans.get(level);
+        arr.add(root.val);
+        ans.set(level,arr);
+        for(int i=0;i<root.children.size();i++){
+            levelOrder(root.children.get(i),level+1,ans);
+        }
+        
+        
+    }
 }
