@@ -109,4 +109,34 @@ public class TreeQustion {
         
         
     }
+
+
+    /*
+     590. N-ary Tree Postorder Traversal
+            Solved
+            Easy
+            Topics
+            Companies
+            Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
+
+            Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)
+     */
+
+    public List<Integer> postorder(Node root) {
+        List<Integer> ans =new ArrayList<>();
+        postorder(root,ans);
+        return ans;
+    }
+
+    public void postorder(Node root,List<Integer> ans) {
+        
+        if(root==null){
+            return;
+        }
+        for(int i=0;i<root.children.size();i++){
+           postorder(root.children.get(i),ans);
+        }
+        ans.add(root.val);
+        
+    }
 }
