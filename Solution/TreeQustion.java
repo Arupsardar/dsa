@@ -139,4 +139,30 @@ public class TreeQustion {
         ans.add(root.val);
         
     }
+
+    /*
+     145. Binary Tree Postorder Traversal
+        Solved
+        Easy
+        Topics
+        Companies
+        Given the root of a binary tree, return the postorder traversal of its nodes' values.
+     */
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> ans =new ArrayList<>();
+        postorderTraversal(root,ans);
+        return ans; 
+     }
+ 
+     public void postorderTraversal(TreeNode root,List<Integer> ans) {
+         if(root==null){
+             return;
+         }
+         postorderTraversal(root.left,ans);
+         postorderTraversal(root.right,ans);
+         ans.add(root.val);
+ 
+ 
+     }
 }
