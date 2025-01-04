@@ -70,4 +70,38 @@ public class Solution {
         return count;
         
     }
+
+    /*
+     3407. Substring Matching Pattern
+
+        Easy
+        Companies
+        Hint
+        You are given a string s and a pattern string p, where p contains exactly one '*' character.
+
+        The '*' in p can be replaced with any sequence of zero or more characters.
+
+        Return true if p can be made a substring of s, and false otherwise.
+
+        A substring is a contiguous non-empty sequence of characters within a string.
+     */
+
+
+    public boolean hasMatch(String s, String p) {
+        int star = p.indexOf('*');
+         String prefix = p.substring(0, star);
+         String suffix = p.substring(star + 1);
+         for (int start = 0; start < s.length(); start++) {
+             for (int end = start; end < s.length(); end++) {
+                 String sub = s.substring(start, end + 1);
+                 if (sub.length() >= prefix.length() + suffix.length()
+                    && sub.startsWith(prefix)
+                    && sub.endsWith(suffix)) {
+                     return true;
+                 }
+             }
+         }
+         return false;
+         
+     }
 }
