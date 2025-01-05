@@ -104,4 +104,63 @@ public class Solution {
          return false;
          
      }
+
+     /*
+      3411. Maximum Subarray With Equal Products
+
+        You are given an array of positive integers nums.
+
+        An array arr is called product equivalent if prod(arr) == lcm(arr) * gcd(arr), where:
+
+        prod(arr) is the product of all elements of arr.
+        gcd(arr) is the GCD of all elements of arr.
+        lcm(arr) is the LCM of all elements of arr.
+        Return the length of the longest product equivalent subarray of nums.
+
+        A subarray is a contiguous non-empty sequence of elements within an array.
+
+        The term gcd(a, b) denotes the greatest common divisor of a and b.
+
+        The term lcm(a, b) denotes the least common multiple of a and b.
+      */
+
+     public int maxLength(int[] nums) {
+        int n = nums.length;
+        int maxLength = 0;
+
+        // Iterate through all possible starting points of subarrays
+        for (int start = 0; start < n; start++) {
+            long product = 1;
+            long currentGCD = 0;
+            long currentLCM = 1;
+
+            // Extend the subarray from the current starting point
+            for (int end = start; end < n; end++) {
+                // Update product
+                product *= nums[end];
+
+                // Update GCD
+                currentGCD = currentGCD == 0 ? nums[end] : gcd((int) currentGCD, nums[end]);
+
+                // Update LCM
+                currentLCM = lcm(currentLCM, nums[end]);
+
+                // Check if the current subarray satisfies the condition
+                if (product == currentGCD * currentLCM) {
+                    maxLength = Math.max(maxLength, end - start + 1);
+                }
+            }
+        }
+
+        return maxLength;
+    }
+
+    private int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
+
+    
+    private long lcm(long a, long b) {
+        return a * (b / gcd((int) a, (int) b));
+    }
 }
