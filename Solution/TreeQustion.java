@@ -190,4 +190,58 @@ public class TreeQustion {
             }
             return isSameTree2(p.left,q.left)&& isSameTree2(p.right,q.right);
         }
+
+    public int maxval =-1;
+    public int maxAncestorDiff2(TreeNode root) {
+        
+        maxAncestorDiff(root,root);
+        return maxval;
+    }
+    /*
+     * 1026. Maximum Difference Between Node and Ancestor
+
+    Given the root of a binary tree, find the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
+
+    A node a is an ancestor of b if either: any child of a is equal to b or any child of a is an ancestor of b.
+
+
+     */
+    /*
+     * boot force
+     */
+    public void maxAncestorDiff(TreeNode root,TreeNode child) {
+        if(child==null){
+            return;
+        }
+        
+        maxval =Math.max(maxval,Math.abs(root.val-child.val));
+        maxAncestorDiff(root,child.left);
+        maxAncestorDiff(root,child.right);
+        maxAncestorDiff(child,child.left);
+        maxAncestorDiff(child,child.right);
+    }
+        /*
+        * optimize
+        */
+
+        public int maxAncestorDiff(TreeNode root) {
+            return maxAncestorDiff(root, root.val, root.val);
+        }
+    
+        public int maxAncestorDiff(TreeNode node, int maxVal, int minVal) {
+            if (node == null) {
+                return maxVal - minVal;
+            }
+    
+            // Update max and min values along the path
+            maxVal = Math.max(maxVal, node.val);
+            minVal = Math.min(minVal, node.val);
+    
+            // Recur for left and right children
+            int leftDiff = maxAncestorDiff(node.left, maxVal, minVal);
+            int rightDiff = maxAncestorDiff(node.right, maxVal, minVal);
+            
+            // Return the maximum difference found
+            return Math.max(leftDiff, rightDiff);
+        }
 }
