@@ -244,4 +244,36 @@ public class TreeQustion {
             // Return the maximum difference found
             return Math.max(leftDiff, rightDiff);
         }
+
+        /*
+         1302. Deepest Leaves Sum
+
+            Given the root of a binary tree, return the sum of values of its deepest leaves.
+         */
+
+
+
+        public int deepestLeavesSum(TreeNode root) {
+            List<Integer> sum =new ArrayList<>();
+            deepestLeavesSum(root,sum,0);
+            return sum.get(sum.size()-1);
+        }
+    
+        public void deepestLeavesSum(TreeNode root,List<Integer> sum,int level) {
+                if(root==null){
+                    return;
+                }
+    
+                if(sum.size()<=level){
+                    sum.add(root.val);
+                }else{
+                    int sum1 =sum.get(level);
+                    sum1=sum1+root.val;
+                    sum.set(level, sum1);
+                }
+                
+                deepestLeavesSum(root.left,sum,level+1);
+                deepestLeavesSum(root.right,sum,level+1);
+                
+            }
 }
