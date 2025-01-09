@@ -276,4 +276,32 @@ public class TreeQustion {
                 deepestLeavesSum(root.right,sum,level+1);
                 
             }
+
+    /*
+     1448. Count Good Nodes in Binary Tree
+
+        Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+        Return the number of good nodes in the binary tree.
+     */
+
+    public int count =0;
+    public int goodNodes(TreeNode root) {
+        if(root==null){
+            return 0;
+        }
+        goodNodes(root,root.val);
+        return count;
+    }
+
+    public void goodNodes(TreeNode root, int pre) {
+        if(root==null){
+            return;
+        }
+        if(root.val>=pre){
+            count++;
+        }
+        goodNodes(root.left,Math.max(pre, root.val));
+        goodNodes(root.right,Math.max(pre, root.val));
+    }
 }
