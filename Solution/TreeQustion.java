@@ -304,4 +304,31 @@ public class TreeQustion {
         goodNodes(root.left,Math.max(pre, root.val));
         goodNodes(root.right,Math.max(pre, root.val));
     }
+
+    /*
+     530. Minimum Absolute Difference in BST
+
+    Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+     */
+    public int mindef=Integer.MAX_VALUE;
+    public Integer pre=null;
+
+    public int getMinimumDifference(TreeNode root) {
+        getMinimumDifference2(root);
+    
+        return mindef;
+    }
+
+    public void getMinimumDifference2(TreeNode root) {
+        if(root==null){
+            return;
+        }
+        getMinimumDifference2(root.left);
+
+        if(pre !=null){
+            mindef=Math.min(mindef,(root.val-pre));
+        }
+        pre =root.val;
+        getMinimumDifference2(root.right);
+    }
 }
