@@ -331,4 +331,37 @@ public class TreeQustion {
         pre =root.val;
         getMinimumDifference2(root.right);
     }
+
+    /*
+     2265. Count Nodes Equal to Average of Subtree
+
+        Given the root of a binary tree, return the number of nodes where the value of the node is equal to the average of the values in its subtree.
+
+        Note:
+
+        The average of n elements is the sum of the n elements divided by n and rounded down to the nearest integer.
+        A subtree of root is a tree consisting of root and all of its descendants.
+     */
+
+    public int averageOfSubtree(TreeNode root) {
+        int[] arr =averageOfSubtree2(root);
+        return arr[0];
+    }
+
+    public int[] averageOfSubtree2(TreeNode root) {
+        if(root==null){
+            return new int[]{0,0,0};
+        }
+        int [] arrleft =averageOfSubtree2(root.left);
+        int [] arrright =averageOfSubtree2(root.right);
+        int sum =root.val+arrleft[1]+arrright[1];
+        int count =1+arrleft[2]+arrright[2];
+
+        int validNodeCount = arrleft[0] + arrright[0];
+        // Check if the current node satisfies the condition.
+        if (root.val == sum / count) {
+            validNodeCount++;
+        }
+        return new int[]{validNodeCount,sum,count};
+    }
 }
