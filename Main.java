@@ -1,13 +1,13 @@
 import java.lang.annotation.Target;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 
 public class Main {
     
     public static void main(String[] args) {
-      int n =-2147483412; 
-      System.out.println(reverse(n)); 
+      System.out.println(letterCombinations("23"));
       
     }
 
@@ -29,6 +29,49 @@ public class Main {
             
         }
         return (int)(mul*neg);
+    }
+
+    public static HashMap<Integer,String> map =new HashMap<>();
+
+    public static List<String> letterCombinations(String digits) {
+        
+        map.put(2, "abc");
+        map.put(3, "def");
+        map.put(4, "ghi");
+        map.put(5, "jml");
+        map.put(6, "mno");
+        map.put(7, "pqrs");
+        map.put(8, "tuv");
+        map.put(9, "wxyz");
+        
+        System.out.println(map);
+
+        List<String>  ans =new ArrayList<>();
+        List<Character> arr=new ArrayList<>();
+        letterCombinations(digits,0,arr,ans);
+        return ans;
+        
+    }
+
+    public static void letterCombinations(String digits,int index,List<Character> charList,List<String> ans){
+        if(digits.length()==index){
+            String result = charList.stream()
+                                .map(String::valueOf)
+                                .collect(Collectors.joining());
+            ans.add(result);
+            return;
+        }
+        
+        int dig =digits.charAt(index)-'0';
+        
+        String arr=map.get(dig);
+        char [] charlist =arr.toCharArray();
+        for(int i=0;i<charlist.length;i++){
+            charList.add(charlist[i]);
+            letterCombinations(digits,index+1,charList,ans);
+            charList.remove(charList.size()-1);
+        }
+
     }
 
     

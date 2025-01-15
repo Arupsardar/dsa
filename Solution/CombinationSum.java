@@ -1,6 +1,7 @@
 package Solution;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CombinationSum {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -33,7 +34,7 @@ public class CombinationSum {
     /*
 
     40. Combination Sum II
-    
+
     Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
 
         Each number in candidates may only be used once in the combination.
@@ -96,4 +97,141 @@ public class CombinationSum {
             currentCombination.remove(currentCombination.size() - 1); // Backtrack
         }
     }
+
+    /*
+     17. Letter Combinations of a Phone Number
+
+        Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+        A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+     */
+
+    public List<String> letterCombinations(String digits) {
+        HashMap<Integer,List<Character>> map =new HashMap<>();
+        List<Character> chararr =new ArrayList<>();
+        chararr.add('a');
+        chararr.add('b');
+        chararr.add('c');
+        map.put(2,new ArrayList<>(chararr));
+        chararr.clear();
+        chararr.add('d');
+        chararr.add('e');
+        chararr.add('f');
+        map.put(3, new ArrayList<>(chararr));
+        chararr.clear();
+        
+        chararr.add('g');
+        chararr.add('h');
+        chararr.add('i');
+        map.put(4, new ArrayList<>(chararr));
+        chararr.clear();
+
+        // Mapping for '5'
+        chararr.add('j');
+        chararr.add('k');
+        chararr.add('l');
+        map.put(5, new ArrayList<>(chararr));
+        chararr.clear();
+
+        // Mapping for '6'
+        chararr.add('m');
+        chararr.add('n');
+        chararr.add('o');
+        map.put(6, new ArrayList<>(chararr));
+        chararr.clear();
+
+        // Mapping for '7'
+        chararr.add('p');
+        chararr.add('q');
+        chararr.add('r');
+        chararr.add('s');
+        map.put(7, new ArrayList<>(chararr));
+        chararr.clear();
+
+        // Mapping for '8'
+        chararr.add('t');
+        chararr.add('u');
+        chararr.add('v');
+        map.put(8, new ArrayList<>(chararr));
+        chararr.clear();
+
+        // Mapping for '9'
+        chararr.add('w');
+        chararr.add('x');
+        chararr.add('y');
+        chararr.add('z');
+        map.put(9, new ArrayList<>(chararr));
+        chararr.clear();
+
+        List<String>  ans =new ArrayList<>();
+        if(digits.length()==0){
+            return ans;
+        }
+        List<Character> arr=new ArrayList<>();
+        letterCombinations(digits,0,arr,ans,map);
+        
+        return ans;
+    }
+
+    public void letterCombinations(String digits,int index,List<Character> charList,List<String> ans,HashMap<Integer,List<Character>> map ){
+        if(digits.length()==index){
+            String result = charList.stream()
+                                .map(String::valueOf)
+                                .collect(Collectors.joining());
+            ans.add(result);
+            return;
+        }
+        int dig =digits.charAt(index)-'0';
+        List<Character> charlist =map.get(dig);
+        for(int i=0;i<charlist.size();i++){
+            charList.add(charlist.get(i));
+            letterCombinations(digits,index+1,charList,ans,map);
+            charList.remove(charList.size()-1);
+        }
+
+    }
+    /*
+     public static HashMap<Integer,String> map =new HashMap<>();
+
+    public static List<String> letterCombinations(String digits) {
+        
+        map.put(2, "abc");
+        map.put(3, "def");
+        map.put(4, "ghi");
+        map.put(5, "jml");
+        map.put(6, "mno");
+        map.put(7, "pqrs");
+        map.put(8, "tuv");
+        map.put(9, "wxyz");
+        
+        System.out.println(map);
+
+        List<String>  ans =new ArrayList<>();
+        List<Character> arr=new ArrayList<>();
+        letterCombinations(digits,0,arr,ans);
+        return ans;
+        
+    }
+
+    public static void letterCombinations(String digits,int index,List<Character> charList,List<String> ans){
+        if(digits.length()==index){
+            String result = charList.stream()
+                                .map(String::valueOf)
+                                .collect(Collectors.joining());
+            ans.add(result);
+            return;
+        }
+        
+        int dig =digits.charAt(index)-'0';
+        
+        String arr=map.get(dig);
+        char [] charlist =arr.toCharArray();
+        for(int i=0;i<charlist.length;i++){
+            charList.add(charlist[i]);
+            letterCombinations(digits,index+1,charList,ans);
+            charList.remove(charList.size()-1);
+        }
+
+    }
+     */
 }

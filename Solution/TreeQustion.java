@@ -3,6 +3,7 @@ package Solution;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import strucher.Node;
@@ -385,6 +386,7 @@ public class TreeQustion {
          if (root.right == null) {
              return 1 + minDepth(root.left);
          }
+         
         return 1+Math.min(minDepth(root.left),minDepth(root.right));
      }
 }
