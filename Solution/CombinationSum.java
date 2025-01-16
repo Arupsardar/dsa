@@ -3,6 +3,8 @@ package Solution;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import strucher.TreeNode;
+
 public class CombinationSum {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans =new ArrayList();
@@ -262,5 +264,37 @@ public class CombinationSum {
        }
 
         
+    }
+    /*
+     113. Path Sum II
+
+    Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references.
+
+    A root-to-leaf path is a path starting from the root and ending at any leaf node. A leaf is a node with no children.
+     */
+
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        
+        List<List<Integer>> ans =new ArrayList<>();
+        List<Integer> arr =new ArrayList<>();
+        pathSum(root,targetSum,ans,arr);
+        List<List<Integer>> ans2 =new ArrayList<>(ans);
+        return ans2;
+    }
+
+    public void pathSum(TreeNode root, int targetSum,List<List<Integer>> ans,List<Integer> arr) {
+        if(root==null){
+            
+            return;
+        }
+        arr.add(root.val);
+
+        if (root.left == null && root.right == null && targetSum == root.val) {
+            ans.add(new ArrayList<>(arr)); 
+        }
+        pathSum(root.left,targetSum-root.val,ans,arr);
+        
+        pathSum(root.right,targetSum-root.val,ans,arr);
+        arr.remove(arr.size()-1);
     }
 }
