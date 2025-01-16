@@ -234,4 +234,33 @@ public class CombinationSum {
 
     }
      */
+
+     /*
+
+     77. Combinations
+      Given two integers n and k, return all possible combinations of k numbers chosen from the range [1, n].
+
+        You may return the answer in any order.
+      */
+
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ans =new ArrayList<>();
+        List<Integer> arr =new ArrayList<>();
+        combine(n,k,1,ans,arr);
+        return ans;
+    }
+    public void combine(int n, int k,int ind,List<List<Integer>> ans,List<Integer> arr) {
+       if(arr.size()==k){
+            ans.add(new ArrayList<>(arr));
+            return;
+       }
+       for(int i=ind;i<=n;i++){
+           arr.add(i);
+           combine(n,k,i+1,ans,arr);
+           arr.remove(arr.size()-1);
+
+       }
+
+        
+    }
 }
