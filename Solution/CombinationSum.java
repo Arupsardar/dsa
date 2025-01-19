@@ -297,4 +297,44 @@ public class CombinationSum {
         pathSum(root.right,targetSum-root.val,ans,arr);
         arr.remove(arr.size()-1);
     }
+
+    /*
+     437. Path Sum III
+
+        Given the root of a binary tree and an integer targetSum, return the number of paths where the sum of the values along the path equals targetSum.
+
+        The path does not need to start or end at the root or a leaf, but it must go downwards (i.e., traveling only from parent nodes to child nodes).
+     */
+
+    public int pathSumiii(TreeNode root, int targetSum) {
+        // Use a HashMap to store prefix sums and their frequencies
+        HashMap<Long, Integer> prefixSumMap = new HashMap<>();
+        // Initialize with prefix sum 0 to handle paths starting from the root
+        prefixSumMap.put(0L, 1);
+        return dfs(root, 0, targetSum, prefixSumMap);
+    }
+
+    private int dfs(TreeNode node, long currentSum, int targetSum, HashMap<Long, Integer> prefixSumMap) {
+        if (node == null) {
+            return 0;
+        }
+
+        // Add the current node's value to the cumulative sum
+        currentSum += node.val;
+
+        // Check how many paths ending at this node have a sum equal to targetSum
+        int count = prefixSumMap.getOrDefault(currentSum - targetSum, 0);
+
+        // Add the current sum to the map
+        prefixSumMap.put(currentSum, prefixSumMap.getOrDefault(currentSum, 0) + 1);
+
+        // Recur for left and right subtrees
+        count += dfs(node.left, currentSum, targetSum, prefixSumMap);
+        count += dfs(node.right, currentSum, targetSum, prefixSumMap);
+
+        // Remove the current sum from the map (backtrack)
+        prefixSumMap.put(currentSum, prefixSumMap.get(currentSum) - 1);
+
+        return count;
+    }
 }
