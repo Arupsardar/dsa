@@ -420,4 +420,33 @@ public class TreeQustion {
         int right =sumNumbers(root.right,num);
         return left+right;
     }
+
+    /*
+     257. Binary Tree Paths
+
+        Given the root of a binary tree, return all root-to-leaf paths in any order.
+
+        A leaf is a node with no children.
+     */
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> ans =new ArrayList<>();
+        String st ="";
+        binaryTreePaths(root,ans,st);
+        return ans;
+    }
+    public void binaryTreePaths(TreeNode root,List<String> ans, String st) {
+        if(root==null){
+            return;
+        }
+        
+        if(root.left==null && root.right==null){
+           st=st+root.val;
+           ans.add(st);
+           return;
+        }
+        st =st+root.val+"->";
+        binaryTreePaths(root.left,ans,st);
+        binaryTreePaths(root.right,ans,st);
+    }
 }
