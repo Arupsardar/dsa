@@ -213,4 +213,43 @@ public class Solution {
  
          return result;
      }
+
+     /*
+      Q1. Count Partitions with Even Sum Difference
+
+        You are given an integer array nums of length n.
+
+        A partition is defined as an index i where 0 <= i < n - 1, splitting the array into two non-empty subarrays such that:
+
+        Left subarray contains indices [0, i].
+        Right subarray contains indices [i + 1, n - 1].
+        Return the number of partitions where the difference between the sum of the left and right subarrays is even.
+      */
+
+
+     public int countPartitions(int[] nums) {
+        int n = nums.length;
+        int totalSum = 0;
+
+        // Calculate total sum of the array
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        int leftSum = 0;
+        int count = 0;
+
+        // Traverse the array to compute partitions
+        for (int i = 0; i < n - 1; i++) {
+            leftSum += nums[i];
+            int rightSum = totalSum - leftSum;
+
+            // Check if the difference between leftSum and rightSum is even
+            if ((leftSum - rightSum) % 2 == 0) {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }
