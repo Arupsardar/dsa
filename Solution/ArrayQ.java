@@ -1,5 +1,7 @@
 package Solution;
 
+import java.util.*;
+
 public class ArrayQ {
     
     /*
@@ -24,6 +26,42 @@ public class ArrayQ {
             }
         }
         return count;
+        
+    }
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        HashSet<List<Integer>>  arr =new HashSet<>();
+        List<Integer> arr2 =new ArrayList<>();
+        boolean[] visit =new boolean[nums.length];
+        permuteUnique(nums,arr,arr2,visit);
+        List<List<Integer>> ans =new ArrayList<>(arr);
+
+        return ans;
+        
+
+    }
+
+    /*
+     47. Permutations II
+
+        Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+     */
+
+    public void permuteUnique(int[] nums,HashSet<List<Integer>>  arr,List<Integer> arr2,boolean[] visit ) {
+        if(arr2.size()==nums.length){
+            arr.add(new ArrayList<>(arr2));
+            return;
+        }
+
+        for(int i=0;i<nums.length;i++){
+            if(!visit[i]){
+                visit[i]=true;
+                arr2.add(nums[i]);
+                permuteUnique(nums,arr,arr2,visit);
+                visit[i]=false;
+                arr2.remove(arr2.size()-1);
+            }
+        }
         
     }
 }
