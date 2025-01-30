@@ -40,4 +40,34 @@ public class BackTraking {
 
     }
 
+    /*
+     784. Letter Case Permutation
+
+        Given a string s, you can transform every letter individually to be lowercase or uppercase to create another string.
+
+        Return a list of all possible strings we could create. Return the output in any order.
+     */
+
+    public List<String> letterCasePermutation(String s) {
+        List<String> result = new ArrayList<>();
+        letterCasePermutation(s, 0, "", result);
+        return result;
+    }
+
+    public void letterCasePermutation(String s,int ind, String st, List<String> result) {
+        if(s.length()==ind){
+            result.add(st);
+            return;
+        }
+
+        char c =s.charAt(ind);
+        if(Character.isLetter(c)){
+            letterCasePermutation(s,ind+1,st+Character.toLowerCase(c),result);
+            letterCasePermutation(s,ind+1,st+Character.toUpperCase(c),result);
+        }else{
+            letterCasePermutation(s,ind+1,st+c,result);
+        }
+
+    }
+
 }
