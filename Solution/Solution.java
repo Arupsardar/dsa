@@ -252,4 +252,37 @@ public class Solution {
 
         return count;
     }
+
+    /*
+     Q1. Find Valid Pair of Adjacent Digits in String
+
+        You are given a string s consisting only of digits. A valid pair is defined as two adjacent digits in s such that:
+
+        The first digit is not equal to the second.
+        Each digit in the pair appears in s exactly as many times as its numeric value.
+        Return the first valid pair found in the string s when traversing from left to right. If no valid pair exists, return an empty string.
+     */
+
+    public String findValidPair(String s) {
+        int [] freq =new int[10];
+         for(int i=0;i<s.length();i++){
+             int t =s.charAt(i)-'0';
+             freq[t]++;
+         }
+ 
+         for (int i = 0; i < s.length() - 1; i++) {
+             char first = s.charAt(i);
+             char second = s.charAt(i + 1);
+ 
+             int firstDigit = first - '0';
+             int secondDigit = second - '0';
+ 
+             // Check if they are different and both match their frequency
+             if (firstDigit != secondDigit && freq[firstDigit] == firstDigit && freq[secondDigit] == secondDigit) {
+                 return "" + first + second; // Return first valid pair found
+             }
+         }
+ 
+         return "";
+     }
 }
