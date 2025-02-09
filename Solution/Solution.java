@@ -335,5 +335,67 @@ public class Solution {
         return mx - mn;
     }
 
+    public int[] assignElements(int[] groups, int[] elements) {
+        int n =groups.length;
+        int m  =elements.length;
+        int [] ans =new int[n];
+        for(int i=0;i<n;i++){
+            ans[i]=-1;
+        }
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;i++){
+                if(ans[j] != -1){
+                    if(groups[j]%elements[i]==0){
+                        ans[j]=i;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    /*
+     3446. Sort Matrix by Diagonals
+
+        You are given an n x n square matrix of integers grid. Return the matrix such that:
+
+        The diagonals in the bottom-left triangle (including the middle diagonal) are sorted in non-increasing order.
+        The diagonals in the top-right triangle are sorted in non-decreasing order.
+     */
+
+    public int[][] sortMatrix(int[][] grid) {
+        int n = grid.length;
+        Map<Integer, List<Integer>> diagonals = new HashMap<>();
+
+        // Step 1: Extract diagonals and store in HashMap
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int key = i - j;
+                diagonals.putIfAbsent(key, new ArrayList<>());
+                diagonals.get(key).add(grid[i][j]);
+            }
+        }
+
+        // Step 2: Sort each diagonal
+        for (Map.Entry<Integer, List<Integer>> entry : diagonals.entrySet()) {
+            List<Integer> diag = entry.getValue();
+            if (entry.getKey() < 0) {  // Top-right triangle (ascending order)
+                Collections.sort(diag);
+            } else {  // Bottom-left triangle (descending order)
+                diag.sort(Collections.reverseOrder());
+            }
+        }
+
+        // Step 3: Reinsert sorted values back into the grid
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int key = i - j;
+                grid[i][j] = diagonals.get(key).remove(0); // Remove from the front
+            }
+        }
+
+        return grid;
+    }
+    
     
 }
