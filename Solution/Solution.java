@@ -409,7 +409,7 @@ public class Solution {
         Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
      */
 
-    public int removeDuplicates(int[] nums) {
+    public static int removeDuplicates(int[] nums) {
         int n = nums.length;
         if (n <= 2) return n;  // If length <= 2, no need to modify
         
@@ -427,9 +427,42 @@ public class Solution {
                 nums[i] = nums[j];
                 i++;
             }
+            System.out.println(j+" -"+count+" _"+i);
         }
 
         return i;
+    }
+
+    public static void main(String[] args) {
+        int [] arr ={0,0,1,1,1,1,2,3,3};
+        removeDuplicates(arr);
+    }
+    /*
+     * 64. Minimum Path Sum
+
+        Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+
+        Note: You can only move either down or right at any point in time.
+     */
+
+    public int minPathSum(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[] dp = new int[n];  // Only store current row
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == 0 && j == 0) {
+                    dp[j] = grid[i][j]; // Start position
+                } else if (i == 0) {
+                    dp[j] = dp[j - 1] + grid[i][j]; // First row: can only come from left
+                } else if (j == 0) {
+                    dp[j] += grid[i][j]; // First column: can only come from above
+                } else {
+                    dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i][j]; // Min from left or top
+                }
+            }
+        }
+        return dp[n - 1];
     }
     
     
