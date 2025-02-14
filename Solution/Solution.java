@@ -508,6 +508,42 @@ public class Solution {
         
         return true;
     }
+
+    /*
+     1079. Letter Tile Possibilities
+
+        You have n  tiles, where each tile has one letter tiles[i] printed on it.
+
+        Return the number of possible non-empty sequences of letters you can make using the letters printed on those tiles.
+     */
+
+
+    public int numTilePossibilities(String tiles) {
+        boolean[] arr =new boolean[tiles.length()];
+        char [] charr =tiles.toCharArray();
+        List<Character> po =new ArrayList<>();
+        HashSet<List<Character>> set =new HashSet<>();
+        numTilePossibilities(charr,arr,po,set,0);
+        return set.size();
+    }
+
+    public void numTilePossibilities(char [] charr,boolean[] arr,List<Character> po,HashSet<List<Character>> set,int ind) {
+            if(po.size()>0){
+             set.add(new ArrayList<>(po));
+            }
+            
+        
+        for(int i=0;i<charr.length;i++){
+            if(!arr[i]){
+                po.add(charr[i]);
+                arr[i]=true;
+                numTilePossibilities(charr,arr,po,set,ind+1);
+                po.remove(po.size()-1);
+                arr[i]=false;
+            }
+            
+        }
+    }
     
     
 }
