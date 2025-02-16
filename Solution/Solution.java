@@ -2,6 +2,8 @@ package Solution;
 
 import java.util.*;
 
+import strucher.TreeNode;
+
 public class Solution {
     /*
      * 3396. Minimum Number of Operations to Make Elements in Array Distinct
@@ -544,6 +546,91 @@ public class Solution {
             
         }
     }
+
+
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> arr =new ArrayList<>();
+        levelOrderBottom(root,arr,0);
+        Collections.reverse(arr);
+        return arr;
+        
+    }
+
+    public void levelOrderBottom(TreeNode root,List<List<Integer>> arr,int ind) {
+        if(root==null){
+            return;
+        }
+        if(arr.size()<=ind){
+            arr.add(new ArrayList<>());
+        }
+        arr.get(ind).add(root.val);
+        levelOrderBottom(root.left,arr,ind+1);
+        levelOrderBottom(root.right,arr,ind+1);
+    }
+
+    public int sumOfGoodNumbers(int[] nums, int k) {
+        int n =nums.length;
+        int sum =0;
+        for(int i=0;i<n;i++){
+            int pri =0;
+            int next =0;
+            if(i-k>0){
+              pri=nums[i-k];
+            }
+            if(i+k<n-1){
+              next = nums[i+k]; 
+            }
+            if(pri<nums[i] && next<nums[i]){
+                sum +=nums[i];
+            }
+        }
+        return sum;
+    }
+
+    /*
+     Q1. Find Special Substring of Length K
+
+        You are given a string s and an integer k.
+
+        Determine if there exists a substring of length exactly k in s that satisfies the following conditions:
+
+        The substring consists of only one distinct character (e.g., "aaa" or "bbb").
+        If there is a character immediately before the substring, it must be different from the character in the substring.
+        If there is a character immediately after the substring, it must also be different from the character in the substring.
+        Return true if such a substring exists. Otherwise, return false.
+
+        A substring is a contiguous non-empty sequence of characters within a string.
+     */
+
+
+    public boolean hasSpecialSubstring(String s, int k) {
+        int n = s.length();
+       
+       if (n < k) return false; // Not enough characters to form a valid substring
+
+       for (int i = 0; i <= n - k; i++) {
+           char ch = s.charAt(i);
+           
+           // Check if substring from i to i + k - 1 has only one distinct character
+           boolean isValid = true;
+           for (int j = i; j < i + k; j++) {
+               if (s.charAt(j) != ch) {
+                   isValid = false;
+                   break;
+               }
+           }
+           
+           // Check the character before and after (if they exist)
+           if (isValid) {
+               if (i > 0 && s.charAt(i - 1) == ch) continue; // Previous char is same
+               if (i + k < n && s.charAt(i + k) == ch) continue; // Next char is same
+               return true;
+           }
+       }
+       return false;
+   }
+
     
     
 }
