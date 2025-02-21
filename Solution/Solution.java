@@ -729,6 +729,33 @@ public class Solution {
 
         
     }
+    /*
+     * 171. Excel Sheet Column Number
+
+            Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.
+
+            For example:
+
+            A -> 1
+            B -> 2
+            C -> 3
+            ...
+            Z -> 26
+            AA -> 27
+            AB -> 28 
+            ...
+
+     */
+
+    public int titleToNumber(String columnTitle) {
+        int num =0;
+        for(int i=0;i <columnTitle.length();i++){
+            int nu =(columnTitle.charAt(i)-'A')+1;
+            
+            num =num*26+nu;
+        }
+        return num;
+    }
 
     
     
