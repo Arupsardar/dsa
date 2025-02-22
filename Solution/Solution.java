@@ -757,6 +757,23 @@ public class Solution {
         return num;
     }
 
+    public int findBottomLeftValue(TreeNode root) {
+        List<List<Integer>> ans =new ArrayList<>();
+    }
+
+    public void findBottomLeftValue(TreeNode root,List<List<Integer>> ans,int level) {
+        if(root==null){
+            return;
+        }
+        if(level >=ans.size()){
+            ans.add(new ArrayList<>());
+        }
+        ans.get(level).add(root.val);
+        findBottomLeftValue(root.left,ans,level+1);
+        findBottomLeftValue(root.right,ans,level+1);
+        
+    }
+
     
     
 }

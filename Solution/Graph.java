@@ -1,9 +1,8 @@
 package Solution;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-
 import org.w3c.dom.Node;
+
+import strucher.TreeNode;
 
 import java.util.*;
 
@@ -53,6 +52,33 @@ public class Graph {
 
         // If we exhaust the queue and don't find the destination, return false
         return false;
+    }
+
+    /*
+     * 513. Find Bottom Left Tree Value
+
+        Given the root of a binary tree, return the leftmost value in the last row of the tree.
+     */
+
+    public int findBottomLeftValue(TreeNode root) {
+        List<List<Integer>> ans =new ArrayList<>();
+        findBottomLeftValue(root,ans,0);
+        int level =ans.size();
+        int ans2 =ans.get(level-1).get(0);
+        return ans2;
+    }
+
+    public void findBottomLeftValue(TreeNode root,List<List<Integer>> ans,int level) {
+        if(root==null){
+            return;
+        }
+        if(level>=ans.size()){
+            ans.add(new ArrayList<>());
+        }
+        ans.get(level).add(root.val);
+        findBottomLeftValue(root.left,ans,level+1);
+        findBottomLeftValue(root.right,ans,level+1);
+        
     }
 
 
