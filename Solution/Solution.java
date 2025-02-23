@@ -759,6 +759,10 @@ public class Solution {
 
     public int findBottomLeftValue(TreeNode root) {
         List<List<Integer>> ans =new ArrayList<>();
+        findBottomLeftValue(root,ans,1);
+        int level =ans.size();
+        int ans2 =ans.get(level-1).get(0);
+        return ans2;
     }
 
     public void findBottomLeftValue(TreeNode root,List<List<Integer>> ans,int level) {
@@ -772,6 +776,30 @@ public class Solution {
         findBottomLeftValue(root.left,ans,level+1);
         findBottomLeftValue(root.right,ans,level+1);
         
+    }
+
+    /*
+     
+3461. Check If Digits Are Equal in String After Operations I
+
+        You are given a string s consisting of digits. Perform the following operation repeatedly until the string has exactly two digits:
+
+        For each pair of consecutive digits in s, starting from the first digit, calculate a new digit as the sum of the two digits modulo 10.
+        Replace s with the sequence of newly calculated digits, maintaining the order in which they are computed.
+        Return true if the final two digits in s are the same; otherwise, return false.
+     */
+
+    public static boolean hasSameDigits(String s) {
+        while (s.length() > 2) {
+            StringBuilder next = new StringBuilder();
+            for (int i = 1; i < s.length(); i++) {
+                int sum = (s.charAt(i - 1) - '0' + s.charAt(i) - '0') % 10;
+                next.append(sum);
+            }
+            s = next.toString();
+        }
+        return s.charAt(0) == s.charAt(1);
+
     }
 
     
