@@ -830,6 +830,43 @@ public class Solution {
         return dummy.next;
     }
 
+    /*
+     * 43. Multiply Strings
+
+        Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+
+        Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+     */
+
+    public String multiply(String num1, String num2) {
+        if(num1.equals("0") && num2.equals("0")){
+              return  "0";
+          }
+          int m=num1.length(), n=num2.length();
+          int [] result =new int[m+n];
+ 
+          for(int i=m -1;i>=0;i--){
+              for(int j=n-1;j>=0;j--){
+                  int mul =(num1.charAt(i)-'0')*(num2.charAt(j)-'0');
+                  int ans = mul +result[i+j+1];
+ 
+                  result[i+j+1] =ans%10;
+                  result[i+j] +=ans/10;
+ 
+              }
+          }
+ 
+          StringBuilder sb =new StringBuilder();
+         for (int num : result) {
+             if (!(sb.length() == 0 && num == 0)) {
+                 sb.append(num);
+             }
+         }
+ 
+          return  sb.length() ==0? "0" :sb.toString(); 
+         
+     }
+
     
     
 }
