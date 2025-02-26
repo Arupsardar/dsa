@@ -867,6 +867,65 @@ public class Solution {
          
      }
 
+
+     /*
+      61. Rotate List
+
+        Given the head of a linked list, rotate the list to the right by k places.
+      */
+
+     public ListNode rotateRight(ListNode head, int k) {
+        if(head ==null){
+          return null;
+        }
+        if(k==0){
+          return head;
+        }
+        int count =0;
+          ListNode current =head;
+          while (current !=null) {
+              count++;
+              current =current.next;
+          }
+          int rotet  =k%count;
+          ListNode c1=head;
+          for(int i=0;i<rotet;i++){
+              ListNode ch =c1;
+              while(c1.next.next !=null){
+                  c1=c1.next;
+              }
+              ListNode c2 =c1;
+              c1 =c1.next;
+              c2.next=null;
+              c1.next =ch;
+              
+          }
+          return c1; 
+      }
+
+      public ListNode rotateRight2(ListNode head, int k) {
+        int count =0;
+        ListNode current =head;
+        while (current !=null) {
+            count++;
+            current =current.next;
+        }
+        int rotet  =k%count;
+        ListNode current1 =head;
+        System.out.println(rotet);
+        while(rotet>0){
+            current1=current1.next;
+            rotet--;
+        }
+        System.out.println(current1.val);
+        current=current1;
+        current1 =current1.next;
+        ListNode temp =current1;
+        current1.next =head;
+        current.next=null;
+        return temp;
+    }
+
     
     
 }
