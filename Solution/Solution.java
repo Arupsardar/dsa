@@ -926,6 +926,29 @@ public class Solution {
         return temp;
     }
 
+    /*
+     189. Rotate Array
+
+        Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+     */
+
+
+    public void rotate(int[] nums, int k) {
+        int n =nums.length;
+         int rot =k%n;
+         int [] rot_arr =new int[rot];
+         for(int i=0;i<rot;i++){
+             
+             rot_arr[rot-1-i]=nums[n-1-i];
+         }
+         for(int i=0;i<n-rot;i++){
+             nums[n-1-i]=nums[n-rot-i-1];
+         }
+        for(int i=0;i<rot;i++){
+            nums[rot-1-i]=rot_arr[rot-1-i];
+        }
+    }
+
     
     
 }
