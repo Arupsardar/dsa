@@ -949,6 +949,56 @@ public class Solution {
         }
     }
 
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        ListNode [] ans =new ListNode[k];
+        int nodecount =0;
+        ListNode current =head;
+        while (current !=null) {
+           current =current.next;
+           nodecount++;  
+        }
+        double submit_val =nodecount/k;
+        if(submit_val<0){
+            current =head;
+            
+        }else{
+
+        }
+        return ans;
+    }
+
+
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+       HashSet<List<Integer>> set =new HashSet<>();
+        boolean[] use =new boolean[nums.length];
+        List<Integer> arr =new ArrayList<>();
+        subsetsWithDup(nums,set,use,arr,0);
+        List<List<Integer>> ans =new ArrayList<>(set);
+        return  ans; 
+    }
+
+    /*
+     90. Subsets II
+
+        Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+
+        The solution set must not contain duplicate subsets. Return the solution in any order.
+ */
+
+    public void subsetsWithDup(int[] nums,HashSet<List<Integer>> set,boolean[] use,List<Integer> arr,int ind) {
+        
+        if(ind == nums.length){
+            set.add(new ArrayList<>(arr));
+            return;
+        }
+
+        arr.add(nums[ind]);
+        subsetsWithDup(nums,set,use,arr,ind+1);
+        arr.remove(arr.size()-1);
+        subsetsWithDup(nums,set,use,arr,ind+1);
+    }
+
     
     
 }
