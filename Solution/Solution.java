@@ -999,6 +999,71 @@ public class Solution {
         subsetsWithDup(nums,set,use,arr,ind+1);
     }
 
+    /*
+     Q1. Transform Array by Parity
+
+        You are given an integer array nums. Transform nums by performing the following operations in the exact order specified:
+
+        Replace each even number with 0.
+        Replace each odd numbers with 1.
+        Sort the modified array in non-decreasing order.
+        Return the resulting array after performing these operations.
+     */
+
+    public int[] transformArray(int[] nums) {
+        int n =nums.length;
+        int [] ans =new int[n];
+        for(int i=0;i<n;i++){
+            ans[i]=nums[i]%2==0?0:1;
+        }
+        Arrays.sort(ans);
+        return ans;
+    }
+
+    /*
+     3471. Find the Largest Almost Missing Integer
+
+        You are given an integer array nums and an integer k.
+
+        An integer x is almost missing from nums if x appears in exactly one subarray of size k within nums.
+
+        Return the largest almost missing integer from nums. If no such integer exists, return -1.
+
+        A subarray is a contiguous sequence of elements within an array.
+     */
+
+
+    public int largestInteger(int[] nums, int k) {
+        Map<Integer, Integer> countInSubarrays = new HashMap<>();
+        int n = nums.length;
+
+        // Generate all subarrays of size k
+        for (int i = 0; i <= n - k; i++) {
+            Set<Integer> uniqueNumbers = new HashSet<>();
+            
+            // Process subarray [i, i+k-1]
+            for (int j = i; j < i + k; j++) {
+                uniqueNumbers.add(nums[j]);
+            }
+
+            // Update occurrence count for numbers in this subarray
+            for (int num : uniqueNumbers) {
+                countInSubarrays.put(num, countInSubarrays.getOrDefault(num, 0) + 1);
+            }
+        }
+
+        int maxAlmostMissing = -1;
+
+        // Find the largest number that appears in exactly one subarray
+        for (int num : countInSubarrays.keySet()) {
+            if (countInSubarrays.get(num) == 1) {
+                maxAlmostMissing = Math.max(maxAlmostMissing, num);
+            }
+        }
+
+        return maxAlmostMissing;
+    }
+
     
     
 }
