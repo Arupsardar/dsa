@@ -1,6 +1,7 @@
 package Solution;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import strucher.ListNode;
 import strucher.TreeNode;
@@ -1062,6 +1063,49 @@ public class Solution {
         }
 
         return maxAlmostMissing;
+    }
+
+    /*
+     60. Permutation Sequence
+
+        The set [1, 2, 3, ..., n] contains a total of n! unique permutations.
+
+        By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+
+        "123"
+        "132"
+        "213"
+        "231"
+        "312"
+        "321"
+        Given n and k, return the kth permutation sequence.
+     */
+
+
+    public String getPermutation(int n, int k) {
+        List<List<Integer>> arr =new ArrayList<>();
+        boolean [] vit =new boolean[n+1];
+        List<Integer> ans =new ArrayList<>();
+        getPermutation(n,0,vit,arr,ans);
+        String result = arr.get(k-1).stream().map(String::valueOf).collect(Collectors.joining());
+        return result;
+    }
+
+    public static void getPermutation(int n, int ind, boolean [] vit,List<List<Integer>> arr,List<Integer> ans) {
+        if(ind==n){
+            arr.add(new ArrayList<>(ans));
+            return;
+        }
+        for(int i=1;i<=n;i++){
+            if(!vit[i]){
+                vit[i]=true;
+                ans.add(i);
+                getPermutation(n,ind+1,vit,arr,ans);
+                ans.remove(ans.size()-1);
+                vit[i]=false;
+            }
+        }
+
     }
 
     
