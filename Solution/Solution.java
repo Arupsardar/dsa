@@ -1138,6 +1138,27 @@ public class Solution {
         
     }
 
+    /*
+     258. Add Digits
+
+        Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.
+     */
+
+
+    public int addDigits(int num) {
+        while(num >=10){
+            int i =0;
+            while(num>0){
+                i =i+num%10;
+                num =num/10;
+            }
+            num =i;
+        }
+        
+        
+        return num;
+    }
+
     
     
 }
