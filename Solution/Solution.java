@@ -1159,6 +1159,63 @@ public class Solution {
         return num;
     }
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        int node_count=0;
+        ListNode c1=head;
+        while (c1 !=null) {
+            c1=c1.next;
+            node_count++;
+        }
+        int needto =node_count/k;
+        for(int i=0;i<needto;i++){
+            
+            for(int j=1;j<k;j++){
+
+            }
+        }
+
+    }
+
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode current = head;
+    
+        while (current != null) {
+            ListNode nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    /*
+     263. Ugly Number
+
+        An ugly number is a positive integer which does not have a prime factor other than 2, 3, and 5.
+
+        Given an integer n, return true if n is an ugly number.
+     */
+
+    public boolean isUgly(int n) {
+        if(n<=0){
+            return false;
+        }
+        while (n>1) {
+           if(n%2==0){
+              n=n/2;
+           }
+           else if(n%3==0){
+            n=n/3;
+           }else if(n%5==0){
+            n=n/5;
+           }else{
+             return false;
+           }
+        }
+        return true;
+    }
+
     
     
 }
