@@ -1159,22 +1159,13 @@ public class Solution {
         return num;
     }
 
-    public ListNode reverseKGroup(ListNode head, int k) {
-        int node_count=0;
-        ListNode c1=head;
-        while (c1 !=null) {
-            c1=c1.next;
-            node_count++;
-        }
-        int needto =node_count/k;
-        for(int i=0;i<needto;i++){
-            
-            for(int j=1;j<k;j++){
+    /*
+     264. Ugly Number II
 
-            }
-        }
+        An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
 
-    }
+        Given an integer n, return the nth ugly number.
+     */
 
     public ListNode reverseList(ListNode head) {
         ListNode prev = null;
@@ -1198,6 +1189,7 @@ public class Solution {
      */
 
     public boolean isUgly(int n) {
+        
         if(n<=0){
             return false;
         }
@@ -1215,6 +1207,49 @@ public class Solution {
         }
         return true;
     }
+
+    public int nthUglyNumber(int n) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        HashSet<Long> seen = new HashSet<>();
+        pq.add(1L);
+        seen.add(1L);
+        
+        int[] primes = {2, 3, 5};
+        long ugly = 1;
+        
+        for (int i = 0; i < n; i++) {
+            ugly = pq.poll();  // Get the smallest ugly number
+            
+            for (int prime : primes) {
+                long next = ugly * prime;
+                if (!seen.contains(next)) {
+                    pq.add(next);
+                    seen.add(next);
+                }
+            }
+        }
+        return (int) ugly;
+        
+    }
+
+    public int nthUglyNumber2(int n) {
+        int count =0;
+        int num =1;
+        int ans=1;
+        while(count<n){
+             boolean val =isUgly(num);
+            
+             if(val){
+                count++;
+             }
+            num++;
+            
+        }
+        return num-1;
+        
+    }
+
+
 
     
     
