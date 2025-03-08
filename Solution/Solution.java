@@ -1249,6 +1249,37 @@ public class Solution {
         
     }
 
+    /*
+     * 204. Count Primes
+
+        Given an integer n, return the number of prime numbers that are strictly less than n.
+     */
+
+
+    public int countPrimes(int n) {
+        if(n<2)return 0;
+        boolean[] isprime =new boolean[n];
+        Arrays.fill(isprime,true);
+        isprime[0]=isprime[1] =false;
+
+        for(int i=2;i*i<n;i++){
+            for(int j=i*i;j<n;j +=i){
+                if(isprime[j]){
+                    isprime[j]=false;
+                }
+            }
+        }
+
+        int count =0;
+        for(int i=0;i<n;i++){
+            if(isprime[i]){
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 
     
