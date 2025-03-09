@@ -1279,6 +1279,65 @@ public class Solution {
         return count;
     }
 
+    //boot froce approch
+    public long[] findMaxSum(int[] nums1, int[] nums2, int k) {
+        int n = nums1.length;
+        long[] answer = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+            for (int j = 0; j < n; j++) {
+                if (nums1[j] < nums1[i]) {
+                    maxHeap.add(nums2[j]);
+                }
+            }
+
+            int sum = 0, count = 0;
+            while (!maxHeap.isEmpty() && count < k) {
+                sum += maxHeap.poll();
+                count++;
+            }
+
+            answer[i] = sum;
+        }
+
+        return answer;
+    }
+
+    /*
+     3477. Fruits Into Baskets II
+
+        You are given two arrays of integers, fruits and baskets, each of length n, where fruits[i] represents the quantity of the ith type of fruit, and baskets[j] represents the capacity of the jth basket.
+
+        From left to right, place the fruits according to these rules:
+
+        Each fruit type must be placed in the leftmost available basket with a capacity greater than or equal to the quantity of that fruit type.
+        Each basket can hold only one type of fruit.
+        If a fruit type cannot be placed in any basket, it remains unplaced.
+        Return the number of fruit types that remain unplaced after all possible allocations are made.
+     */
+
+    public int numOfUnplacedFruits(int[] fruits, int[] baskets) {
+        boolean[] used = new boolean[baskets.length]; // Track used baskets
+        int unplaced = 0;
+
+        for (int i = 0; i < fruits.length; i++) {
+            boolean placed = false;
+            for (int j = 0; j < baskets.length; j++) {
+                if (!used[j] && baskets[j] >= fruits[i]) {
+                    used[j] = true; // Mark basket as used
+                    placed = true;
+                    break; // Stop searching once placed
+                }
+            }
+            if (!placed) {
+                unplaced++; // No suitable basket found
+            }
+        }
+        return unplaced;
+    }
+
 
 
 
