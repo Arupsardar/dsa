@@ -1338,6 +1338,26 @@ public class Solution {
         return unplaced;
     }
 
+    /*
+     * 
+
+        414. Third Maximum Number
+
+        Given an integer array nums, return the third distinct maximum number in this array. If the third maximum does not exist, return the maximum number.
+     */
+
+    public int thirdMax(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        List<Integer> arr = new ArrayList<>(set);
+        arr.sort(Comparator.reverseOrder()); // Sort in descending order
+
+        return arr.size() >= 3 ? arr.get(2) : arr.get(0);
+    }
+
 
 
 
