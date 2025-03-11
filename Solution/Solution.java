@@ -1358,6 +1358,34 @@ public class Solution {
         return arr.size() >= 3 ? arr.get(2) : arr.get(0);
     }
 
+    /*
+     * 56. Merge Intervals
+
+        Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+     */
+
+    public int[][] merge(int[][] intervals) {
+        if(intervals.length<=1){
+             return  intervals;
+         }
+ 
+         Arrays.sort(intervals, Comparator.comparingInt(i ->i[0]));
+         List<int[]> arr =new ArrayList<>();
+         int [] newInervale =intervals[0];
+         arr.add(newInervale);
+ 
+         for(int [] interval : intervals){
+             if(interval[0]<=newInervale[1]){
+                 newInervale[1]=Math.max(interval[1],newInervale[1]);
+             }else{
+                 newInervale =interval;
+                 arr.add(newInervale);
+             }
+         }
+ 
+         return  arr.toArray(new int[arr.size()][]); 
+     }
+
 
 
 
