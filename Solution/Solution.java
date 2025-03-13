@@ -1410,6 +1410,30 @@ public class Solution {
        return merge(mergedArray);
     }
 
+    /*
+     3340. Check Balanced String
+
+        You are given a string num consisting of only digits. A string of digits is called balanced if the sum of the digits at even indices is equal to the sum of digits at odd indices.
+
+        Return true if num is balanced, otherwise return false.
+     */
+
+
+    public boolean isBalanced(String num) {
+        int n =num.length();
+        int evensum =0,odd_sum =0;
+        for(int i=0;i<n;i++){
+            if(i%2==0){
+                evensum +=num.charAt(i)-'0';
+            }else {
+                odd_sum +=num.charAt(i)-'0';
+            }
+        }
+        return evensum==odd_sum;
+    
+
+    }
+
 
 
 
