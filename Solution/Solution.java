@@ -1433,6 +1433,79 @@ public class Solution {
     
 
     }
+    /*
+     * 51. N-Queens
+
+        The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+        Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+
+        Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.
+     */
+
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        String[][] bord = new String[n][n];
+
+        // Initialize board with "."
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(bord[i], ".");
+        }
+
+        recurtionfunction(bord, 0, n, ans);
+        return ans;
+    }
+
+    public boolean check(String[][] bord, int n, int row, int col) {
+        // Check upper column
+        for (int i = 0; i < row; i++) {
+            if (bord[i][col].equals("Q")) {
+                return false;
+            }
+        }
+
+        // Check upper left diagonal
+        int r = row, c = col;
+        while (r >= 0 && c >= 0) {
+            if (bord[r][c].equals("Q")) {
+                return false;
+            }
+            r--;
+            c--;
+        }
+
+        // Check upper right diagonal
+        r = row;
+        c = col;
+        while (r >= 0 && c < n) {
+            if (bord[r][c].equals("Q")) {
+                return false;
+            }
+            r--;
+            c++;
+        }
+
+        return true; // If no queen attacks this position
+    }
+
+    public void recurtionfunction(String[][] bord, int row, int n, List<List<String>> ans) {
+        if (row == n) {
+            List<String> arr = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                arr.add(String.join("", bord[i])); // Correct way to store board row
+            }
+            ans.add(arr);
+            return;
+        }
+
+        for (int col = 0; col < n; col++) {
+            if (check(bord, n, row, col)) {
+                bord[row][col] = "Q"; // Place the queen
+                recurtionfunction(bord, row + 1, n, ans);
+                bord[row][col] = "."; // Backtrack
+            }
+        }
+    }
 
 
 
