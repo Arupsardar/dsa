@@ -1536,6 +1536,44 @@ public class Solution {
         return solutions;
     }
 
+    public int totalNumbers(int[] digits) {
+        HashSet<Integer> set = new HashSet<>(); // Store unique numbers
+        boolean[] used = new boolean[digits.length]; // Track used digits
+        backtrack(digits, used, new ArrayList<>(), set);
+        return set.size();
+    }
+
+    /*
+     * 3483. Unique 3-Digit Even Numbers
+
+        You are given an array of digits called digits. Your task is to determine the number of distinct three-digit even numbers that can be formed using these digits.
+
+        Note: Each copy of a digit can only be used once per number, and there may not be leading zeros.
+     */
+
+    private void backtrack(int[] digits, boolean[] used, List<Integer> num, HashSet<Integer> set) {
+        if (num.size() == 3) {
+            if (num.get(2) % 2 == 0) { // Ensure last digit is even
+                int number = num.get(0) * 100 + num.get(1) * 10 + num.get(2); // Convert to integer
+                set.add(number);
+            }
+            return;
+        }
+
+        for (int i = 0; i < digits.length; i++) {
+            if (used[i]) continue; // Skip used digits
+            if (num.size() == 0 && digits[i] == 0) continue; // Skip leading zero
+
+            used[i] = true; // Mark as used
+            num.add(digits[i]);
+
+            backtrack(digits, used, num, set);
+
+            num.remove(num.size() - 1); // Backtrack
+            used[i] = false; // Unmark for other permutations
+        }
+    }
+
 
 
 
