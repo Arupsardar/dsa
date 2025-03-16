@@ -1610,6 +1610,50 @@ class NumArray {
         return ans;
     }
 
+    /*
+     * 3487. Maximum Unique Subarray Sum After Deletion
+
+        You are given an integer array nums.
+
+        You are allowed to delete any number of elements from nums without making it empty. After performing the deletions, select a subarray of nums such that:
+
+        All elements in the subarray are unique.
+        The sum of the elements in the subarray is maximized.
+        Return the maximum sum of such a subarray.
+     */
+
+
+    public int maxSum(int[] nums) {
+        Set<Integer> seen = new HashSet<>();
+        int sum = 0;
+        boolean hasNonNegative = false;
+        
+        // Include one copy of each non-negative number
+        for (int num : nums) {
+            if (num >= 0) {
+                hasNonNegative = true;
+                if (!seen.contains(num)) {
+                    seen.add(num);
+                    sum += num;
+                }
+            }
+        }
+        
+        // If there is at least one non-negative, return the sum of distinct non-negatives.
+        if (hasNonNegative) {
+            return sum;
+        } else {
+            // All elements are negative: return the maximum (least negative) element.
+            int maxNegative = nums[0];
+            for (int num : nums) {
+                if (num > maxNegative) {
+                    maxNegative = num;
+                }
+            }
+            return maxNegative;
+        }
+    }
+
     
 }
 
