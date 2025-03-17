@@ -1574,6 +1574,34 @@ public class Solution {
         }
     }
 
+    /*
+     * 3300. Minimum Element After Replacement With Digit Sum
+
+        You are given an integer array nums.
+
+        You replace each element in nums with the sum of its digits.
+
+        Return the minimum element in nums after all replacements.
+     */
+
+
+    public int minElement(int[] nums) {
+        int min_num =Integer.MAX_VALUE;
+       for(int i=0;i<nums.length;i++){
+           min_num=Math.min(min_num,addDigits2(nums[i]));
+       }
+       return  min_num;
+    }
+
+    public int addDigits2(int num) {
+         int i=0;
+        while(num>0){
+            i =i+num%10;
+            num =num/10;
+        }
+        return i;
+    }
+
 
 
 
