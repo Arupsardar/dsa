@@ -1758,6 +1758,36 @@ class NumArray {
          return  Integer.parseInt(num);
     }
 
+    /*
+     2180. Count Integers With Even Digit Sum
+
+        Given a positive integer num, return the number of positive integers less than or equal to num whose digit sums are even.
+
+        The digit sum of a positive integer is the sum of all its digits.
+     */
+
+    public int countEven(int num) {
+        int count =0;
+        for(int i=1;i<=num;i++){
+            
+            int nu =countnum(i);
+            if(nu%2==0){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countnum(int num){
+        int ans=0;
+        while(num>0){
+            ans +=num%10;
+            num=num/10; 
+        }
+        
+        return ans;
+    }
+
     
 }
 
