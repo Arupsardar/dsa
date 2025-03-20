@@ -1788,6 +1788,42 @@ class NumArray {
         return ans;
     }
 
+    /*
+     2553. Separate the Digits in an Array
+
+        Given an array of positive integers nums, return an array answer that consists of the digits of each integer in nums after separating them in the same order they appear in nums.
+
+        To separate the digits of an integer is to get all the digits it has in the same order.
+
+        For example, for the integer 10921, the separation of its digits is [1,0,9,2,1].
+     */
+
+    public int[] separateDigits(int[] nums) {
+        List<List<Integer>> list =new ArrayList<>();
+        int count=0;
+        for(int i=0;i<nums.length;i++){
+            int num =nums[i];
+            List<Integer> arr =new ArrayList<>();
+            while (num>0){
+                arr.add(num%10);
+                num=num/10;
+                count++;
+            }
+            list.add(arr);
+        }
+        
+        int [] ans =new int[count];
+        int i=0;
+        for(List<Integer> arr:list){
+            for (int j=arr.size()-1;j>=0;j--){
+                ans[i]=arr.get(j);
+                i++;
+            }
+        }
+        return ans;
+    }
+     
+
     
 }
 
