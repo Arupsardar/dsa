@@ -1822,6 +1822,39 @@ class NumArray {
         }
         return ans;
     }
+
+    /*
+     2310. Sum of Numbers With Units Digit K
+
+        Given two integers num and k, consider a set of positive integers with the following properties:
+
+        The units digit of each integer is k.
+        The sum of the integers is num.
+        Return the minimum possible size of such a set, or -1 if no such set exists.
+
+        Note:
+
+        The set can contain multiple instances of the same integer, and the sum of an empty set is considered 0.
+        The units digit of a number is the rightmost digit of the number.
+     */
+
+    public int minimumNumbers(int num, int k) {
+        if(num==0){
+            return 0;
+        }
+        int count =0;
+        for(int i=1;i<=10;i++){
+            int sum =i*k;
+            if(sum>num){
+                break;
+            }
+            if((num-sum)%10==0){
+                return i;
+            }
+        }
+        return -1;
+        
+    }
      
 
     
