@@ -1886,7 +1886,103 @@ class NumArray {
         }
         return arr[n-1][m-1];
     }
+
+    /*
+     * 3492. Maximum Containers on a Ship
+
+        You are given a positive integer n representing an n x n cargo deck on a ship. Each cell on the deck can hold one container with a weight of exactly w.
+
+        However, the total weight of all containers, if loaded onto the deck, must not exceed the ship's maximum weight capacity, maxWeight.
+
+        Return the maximum number of containers that can be loaded onto the ship.
+     */
+
+    public int maxContainers(int n, int w, int maxWeight) {
+        int numberOfCells = n * n; 
+        int containerCount = 0;
+        int totalWeight = 0;
+
+        while (containerCount < numberOfCells) { 
+            if (totalWeight + w > maxWeight) {  
+                break;
+            }
+            totalWeight += w;
+            containerCount++;
+        }
+        
+        return containerCount;
+        
+    }
+
+    /*
+     * 3493. Properties Graph
+
+        You are given a 2D integer array properties having dimensions n x m and an integer k.
+
+        Define a function intersect(a, b) that returns the number of distinct integers common to both arrays a and b.
+
+        Construct an undirected graph where each index i corresponds to properties[i]. There is an edge between node i and node j if and only if intersect(properties[i], properties[j]) >= k, where i and j are in the range [0, n - 1] and i != j.
+
+        Return the number of connected components in the resulting graph.
+     */
+
+    public int numberOfComponents(int[][] properties, int k) {
+        int n = properties.length;
+        List<List<Integer>> graph = new ArrayList<>();
+        
+        // Convert each row into a set for faster intersection computation
+        List<Set<Integer>> sets = new ArrayList<>();
+        for (int[] row : properties) {
+            Set<Integer> set = new HashSet<>();
+            for (int num : row) {
+                set.add(num);
+            }
+            sets.add(set);
+            graph.add(new ArrayList<>());
+        }
+
+        // Build the graph by checking intersection counts
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (intersect(sets.get(i), sets.get(j)) >= k) {
+                    graph.get(i).add(j);
+                    graph.get(j).add(i);
+                }
+            }
+        }
+
+        // Count connected components using DFS
+        boolean[] visited = new boolean[n];
+        int components = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                dfs(graph, visited, i);
+                components++;
+            }
+        }
+
+        return components;
+    }
+
+    private int intersect(Set<Integer> a, Set<Integer> b) {
+        int count = 0;
+        for (int num : a) {
+            if (b.contains(num)) {
+                count++;
+            }
+        }
+        return count;
+    }
      
+    private void dfs(List<List<Integer>> graph, boolean[] visited, int node) {
+        visited[node] = true;
+        for (int neighbor : graph.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(graph, visited, neighbor);
+            }
+        }
+    }
 
     
 }
