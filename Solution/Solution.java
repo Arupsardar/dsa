@@ -2114,6 +2114,44 @@ class NumArray {
         return increasing || decreasing;
     }
 
+    /*
+     16. 3Sum Closest
+
+        Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
+
+        Return the sum of the three integers.
+
+        You may assume that each input would have exactly one solution.
+     */
+
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+         int closestSum = nums[0] + nums[1] + nums[2]; // Start with the first three numbers
+         
+         for (int i = 0; i < nums.length - 2; i++) {
+             int left = i + 1, right = nums.length - 1;
+             
+             while (left < right) {
+                 int sum = nums[i] + nums[left] + nums[right];
+ 
+                 // Update closest sum if the new sum is closer to the target
+                 if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
+                     closestSum = sum;
+                 }
+ 
+                 // Move pointers based on comparison with target
+                 if (sum < target) {
+                     left++;  // Increase sum
+                 } else if (sum > target) {
+                     right--; // Decrease sum
+                 } else {
+                     return sum; // Exact match found
+                 }
+             }
+         }
+         return closestSum;
+     }
+
     
 }
 
