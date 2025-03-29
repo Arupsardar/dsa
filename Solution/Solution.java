@@ -2151,6 +2151,26 @@ class NumArray {
          }
          return closestSum;
      }
+     /*
+      * 3498. Reverse Degree of a String
+
+        Given a string s, calculate its reverse degree.
+
+        The reverse degree is calculated as follows:
+
+        For each character, multiply its position in the reversed alphabet ('a' = 26, 'b' = 25, ..., 'z' = 1) with its position in the string (1-indexed).
+        Sum these products for all characters in the string.
+        Return the reverse degree of s.
+      */
+
+     public int reverseDegree(String s) {
+        int count =0;
+        for(int i=0;i<s.length();i++){
+            count +=(i+1)*(26-(int)(s.charAt(i)-'a'));
+        }
+        return count;
+        
+    }
 
     
 }
