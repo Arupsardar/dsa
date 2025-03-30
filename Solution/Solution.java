@@ -2172,6 +2172,52 @@ class NumArray {
         
     }
 
+    /*
+     * 3503. Longest Palindrome After Substring Concatenation I
+
+        You are given two strings, s and t.
+
+        You can create a new string by selecting a substring from s (possibly empty) and a substring from t (possibly empty), then concatenating them in order.
+
+        Return the length of the longest palindrome that can be formed this way.
+     */
+
+    private boolean isPalindrome(String str) {
+        int left = 0, right = str.length() - 1;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public int longestPalindrome(String s, String t) {
+        int maxLength = 0;
+        int n = s.length(), m = t.length();
+
+        // Iterate over all substrings of s
+        for (int i = 0; i <= n; i++) {
+            for (int j = i; j <= n; j++) {
+                String subS = s.substring(i, j);
+
+                // Iterate over all substrings of t
+                for (int k = 0; k <= m; k++) {
+                    for (int l = k; l <= m; l++) {
+                        String subT = t.substring(k, l);
+
+                        // Concatenate and check if it's a palindrome
+                        String concatStr = subS + subT;
+                        if (isPalindrome(concatStr)) {
+                            maxLength = Math.max(maxLength, concatStr.length());
+                        }
+                    }
+                }
+            }
+        }
+
+        return maxLength;
+    }
+
     
 }
 
