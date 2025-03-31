@@ -2218,6 +2218,74 @@ class NumArray {
         return maxLength;
     }
 
+    /*
+     * Count Digits
+
+        Given a positive integer n, count the number of digits in n that divide n evenly (i.e., without leaving a remainder). Return the total number of such digits.
+
+        A digit d of n divides n evenly if the remainder when n is divided by d is 0 (n % d == 0).
+        Digits of n should be checked individually. If a digit is 0, it should be ignored because division by 0 is undefined.
+     */
+
+    static int evenlyDivides(int n) {
+        int count =0;
+        int num =n;
+        while(n>0){
+            int mod=n%10;
+            n=n/10;
+            if(mod != 0 && num%mod==0){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*
+     * Given two integers a and b, the task is to compute their LCM and GCD and return an array containing their LCM and GCD.
+     */
+
+    public static int[] lcmAndGcd(int a, int b) {
+        int max =Math.max(a,b);
+        int min =Math.min(a,b);
+        while(max%min!=0){
+            int mod =max%min;
+            max =min;
+            min =mod;
+        }
+        int [] ans =new int[2];
+        ans[1]=min;
+        int lcm =(a*b)/min;
+        ans[0]=lcm;
+        return ans;
+    }
+
+    /*
+     * 74. Search a 2D Matrix
+
+        You are given an m x n integer matrix matrix with the following two properties:
+
+        Each row is sorted in non-decreasing order.
+        The first integer of each row is greater than the last integer of the previous row.
+        Given an integer target, return true if target is in matrix or false otherwise.
+
+        You must write a solution in O(log(m * n)) time complexity.
+     */
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int n =matrix.length;
+        int m =matrix[0].length;
+        boolean ans =false;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]==target){
+                    return true;
+                }
+            }
+        }
+
+        return ans;
+    }
+
     
 }
 
