@@ -2352,6 +2352,49 @@ class NumArray {
         }
         return false;
     }
+
+    /*
+     * Sum Of Digits
+
+        Given a number n. Find the sum of all the digits of n.
+     */
+
+    static int sumOfDigits(int n) {
+        int sum =0;
+        while(n>0){
+            sum +=n%10;
+            n=n/10;
+        }
+        return sum;
+    }
+
+    /*
+     * 203. Remove Linked List Elements
+
+        Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+     */
+
+    public ListNode removeElements(ListNode head, int val) {
+        if(head ==null){
+            return head;
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode c1 = dummy;
+        
+        while(c1.next !=null){
+            if(c1.next.val ==val){
+                c1.next =c1.next.next;
+            }else{
+                c1=c1.next;
+            }
+        
+        }
+        
+
+        return dummy.next;
+    }
         
     
 
