@@ -2395,6 +2395,35 @@ class NumArray {
 
         return dummy.next;
     }
+
+    /*
+     * 
+
+        50. Pow(x, n)
+
+        Implement pow(x, n), which calculates x raised to the power n (i.e., xn).
+     */
+
+    public double myPow(double x, int n) {
+        if (n == 0) return 1.0; // Base case: x^0 = 1
+    
+            long exp = n; // Convert to long to avoid overflow for INT_MIN case
+            if (exp < 0) {
+                x = 1 / x;
+                exp = -exp;
+            }
+            
+            double result = 1.0;
+            while (exp > 0) {
+                if (exp % 2 == 1) { // If exponent is odd, multiply the result with x
+                    result *= x;
+                }
+                x *= x;  // Square the base
+                exp /= 2; // Reduce exponent by half
+            }
+            
+        return result;
+    }
         
     
 
