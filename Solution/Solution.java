@@ -2441,6 +2441,41 @@ class NumArray {
          }
          return  ones;
      }
+
+
+     /*
+      * 3158. Find the XOR of Numbers Which Appear Twice
+
+        You are given an array nums, where each number in the array appears either once or twice.
+
+        Return the bitwise XOR of all the numbers that appear twice in the array, or 0 if no number appears twice.
+      */
+     public int duplicateNumbersXOR(int[] nums) {
+        int ans = 0;
+        boolean[] has = new boolean[51];
+        for (int num : nums) {
+            if (has[num]) ans ^= num;
+            has[num] = true;
+        }
+        return ans;
+    }
+
+    public int duplicateNumbersXOR2(int[] nums) {
+        Map<Integer, Integer> freq = new HashMap<>();
+     
+         for (int num : nums) {
+             freq.put(num, freq.getOrDefault(num, 0) + 1);
+         }
+         
+         int xor = 0;
+         for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+             if (entry.getValue() == 2) {
+                 xor ^= entry.getKey();
+             }
+         }
+         
+         return xor;
+     }
         
     
 
