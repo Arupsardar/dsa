@@ -2475,7 +2475,155 @@ class NumArray {
          }
          
          return xor;
+    }
+
+    /*
+     
+     */
+
+
+    public static int findMinReplacements(List<Integer> pack) {
+        int n = pack.size();
+        Map<Integer, Integer> evenFreq = new HashMap<>();
+        Map<Integer, Integer> oddFreq = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            int val = pack.get(i);
+            if (i % 2 == 0) evenFreq.put(val, evenFreq.getOrDefault(val, 0) + 1);
+            else oddFreq.put(val, oddFreq.getOrDefault(val, 0) + 1);
+        }
+
+        List<int[]> evenTop = getTopTwo(evenFreq);
+        List<int[]> oddTop = getTopTwo(oddFreq);
+
+        int maxFreqEven1 = evenTop.get(0)[1], evenKey1 = evenTop.get(0)[0];
+        int maxFreqOdd1 = oddTop.get(0)[1], oddKey1 = oddTop.get(0)[0];
+
+        if (evenKey1 != oddKey1) {
+            return n / 2 - maxFreqEven1 + n / 2 - maxFreqOdd1;
+        } else {
+            int opt1 = n / 2 - maxFreqEven1 + n / 2 - (oddTop.size() > 1 ? oddTop.get(1)[1] : 0);
+            int opt2 = n / 2 - (evenTop.size() > 1 ? evenTop.get(1)[1] : 0) + n / 2 - maxFreqOdd1;
+            return Math.min(opt1, opt2);
+        }
+    }
+
+    private static List<int[]> getTopTwo(Map<Integer, Integer> freqMap) {
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
+            pq.offer(new int[]{entry.getKey(), entry.getValue()});
+        }
+        List<int[]> topTwo = new ArrayList<>();
+        if (!pq.isEmpty()) topTwo.add(pq.poll());
+        if (!pq.isEmpty()) topTwo.add(pq.poll());
+        return topTwo;
+    }
+
+    /*
+     * 
+     */
+
+    public static int minRetailersToRelocate(List<Integer> regionStart, List<Integer> regionEnd) {
+        int n = regionStart.size();
+        int[] starts = new int[n];
+        int[] ends = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            starts[i] = regionStart.get(i);
+            ends[i] = regionEnd.get(i);
+        }
+
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+
+        int minToRelocate = n;
+
+        for (int i = 0; i < n; i++) {
+            int left = regionStart.get(i);
+            int right = regionEnd.get(i);
+
+            int before = upperBound(ends, left - 1); // ends before current start
+            int after = n - lowerBound(starts, right + 1); // starts after current end
+            int nonIntersecting = before + after;
+
+            minToRelocate = Math.min(minToRelocate, nonIntersecting);
+        }
+
+        return minToRelocate;
+    }
+
+    private static int upperBound(int[] arr, int val) {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] <= val) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+
+    private static int lowerBound(int[] arr, int val) {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] < val) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+
+    /*
+     * Q1. Minimum Pair Removal to Sort Array I
+
+        Given an array nums, you can perform the following operation any number of times:
+
+        Select the adjacent pair with the minimum sum in nums. If multiple such pairs exist, choose the leftmost one.
+        Replace the pair with their sum.
+        Return the minimum number of operations needed to make the array non-decreasing.
+
+        An array is said to be non-decreasing if each element is greater than or equal to its previous element (if it exists).
+
+
+     */
+
+    public int minimumPairRemoval(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+            for (int num : nums) {
+                list.add(num);
+            }
+        
+            int operations = 0;
+        
+            while (!isSorted(list)) {
+                int minSum = Integer.MAX_VALUE;
+                int minIndex = -1;
+        
+                // Find the leftmost adjacent pair with the minimum sum
+                for (int i = 0; i < list.size() - 1; i++) {
+                    int sum = list.get(i) + list.get(i + 1);
+                    if (sum < minSum) {
+                        minSum = sum;
+                        minIndex = i;
+                    }
+                }
+        
+                // Replace the pair with their sum
+                list.set(minIndex, minSum);
+                list.remove(minIndex + 1); // shrink the list
+                operations++;
+            }
+        
+            return operations; 
      }
+ 
+    private boolean isSorted(List<Integer> nums) {
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums.get(i) < nums.get(i - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
         
     
 
