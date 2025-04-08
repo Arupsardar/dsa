@@ -2663,6 +2663,55 @@ class NumArray {
         // Determine sign
         return (dividend > 0) == (divisor > 0) ? result : -result;
      }
+
+     /*
+      * 260. Single Number III
+
+        Given an integer array nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. You can return the answer in any order.
+
+        You must write an algorithm that runs in linear runtime complexity and uses only constant extra space.
+      */
+
+     public int[] singleNumberIII(int[] nums) {
+        long xor =0;
+        for (int num: nums) {
+           xor =xor ^num;
+        }
+        long rit =(xor&xor-1)^xor;
+        int b1=0,b2=0;
+        for (int num: nums) {
+            if((rit & num)>0){
+                b1 =b1^num;
+            }else{
+                b2 =b2^num;
+            }
+        }
+
+        return new int[] {b1,b2};
+    }
+
+     public int[] singleNumberIIIBoot(int[] nums) {
+        HashMap<Integer,Integer> map =new HashMap<>();
+        for (int num:nums) {
+           if(map.containsKey(num)){
+               map.put(num,map.get(num)+1);
+           }else{
+               map.put(num,1);
+           }
+        }
+        List<Integer> arr =new ArrayList<>();
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            if(entry.getValue()==1){
+                arr.add(entry.getKey());
+            }
+        }
+        int[] result = new int[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            result[i] = arr.get(i);
+        }
+
+        return result;
+    }
         
     
 
