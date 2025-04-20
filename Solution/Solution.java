@@ -3087,6 +3087,50 @@ class NumArray {
         return maxLen;
     }
 
+    /*
+     * Q1. Calculate Score After Performing Instructions
+
+        You are given two arrays, instructions and values, both of size n.
+
+        You need to simulate a process based on the following rules:
+
+        You start at the first instruction at index i = 0 with an initial score of 0.
+        If instructions[i] is "add":
+        Add values[i] to your score.
+        Move to the next instruction (i + 1).
+        If instructions[i] is "jump":
+        Move to the instruction at index (i + values[i]) without modifying your score.
+        The process ends when you either:
+
+        Go out of bounds (i.e., i < 0 or i >= n), or
+        Attempt to revisit an instruction that has been previously executed. The revisited instruction is not executed.
+        Return your score at the end of the process.
+     */
+
+
+    public long calculateScore(String[] instructions, int[] values) {
+        long score = 0;
+        int i = 0;
+        int n = instructions.length;
+        boolean[] visited = new boolean[n];
+
+        while (i >= 0 && i < n && !visited[i]) {
+            visited[i] = true;
+
+            if (instructions[i].equals("add")) {
+                score += values[i];
+                i++; // move to next instruction
+            } else if (instructions[i].equals("jump")) {
+                i += values[i]; // jump to i + values[i]
+            } else {
+                // Optional: handle invalid instruction
+                break;
+            }
+        }
+
+        return score;
+    }
+
     
 
     
