@@ -3178,6 +3178,47 @@ class NumArray {
         return ans;
     }
 
+    /*
+     * 38. Count and Say
+
+        The count-and-say sequence is a sequence of digit strings defined by the recursive formula:
+
+        countAndSay(1) = "1"
+        countAndSay(n) is the run-length encoding of countAndSay(n - 1).
+        Run-length encoding (RLE) is a string compression method that works by replacing consecutive identical characters (repeated 2 or more times) with the concatenation of the character and the number marking the count of the characters (length of the run). For example, to compress the string "3322251" we replace "33" with "23", replace "222" with "32", replace "5" with "15" and replace "1" with "11". Thus the compressed string becomes "23321511".
+
+        Given a positive integer n, return the nth element of the count-and-say sequence.
+     */
+
+
+    public String countAndSay(int n) {
+        String st ="1";
+        for(int i=1;i<n;i++){
+            char[] arr =st.toCharArray();
+            StringBuilder sb =new StringBuilder();
+            int p1=0;
+            int p2 =0;
+            int n1 =arr.length;
+            while (p2<n1){
+                if(arr[p1] != arr[p2]){
+                    int count =p2-p1;
+                    sb.append(count);
+                    sb.append(arr[p1]);
+                    p1=p2;
+                }else {
+                    p2++;
+                }
+            }
+            if (p1 < n1) {
+                sb.append(p2 - p1);
+                sb.append(arr[p1]);
+            }
+            st = sb.toString();
+
+        }
+        return  st;
+    }
+
     
 
     
