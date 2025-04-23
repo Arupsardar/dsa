@@ -3219,6 +3219,55 @@ class NumArray {
         return  st;
     }
 
+    public String countAndSay2(int n) {
+        if (n == 1) return "1";
+
+        String prev = countAndSay(n - 1);
+        StringBuilder res = new StringBuilder();
+
+        int i = 0;
+        while (i < prev.length()) {
+            int count = 1;
+            while (i + 1 < prev.length() && prev.charAt(i) == prev.charAt(i + 1)) {
+                count++;
+                i++;
+            }
+            res.append(count).append(prev.charAt(i));
+            i++;
+        }
+
+        return res.toString();
+    }
+
+    /*
+     * 82. Remove Duplicates from Sorted List II
+
+        Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
+     */
+
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode curr =head;
+        ListNode prev =null;
+        while(curr !=null){
+            if(curr.next !=null && curr.val ==curr.next.val){
+                int val =curr.val;
+                while ((curr !=null && curr.val==val)) {
+                    curr =curr.next;
+                }
+                if(prev != null){
+                   prev.next =curr;
+                }else{
+                    head=curr;
+                }
+            }else{
+                prev =curr;
+                curr =curr.next;
+            }
+        }
+        return head; 
+    }
+
     
 
     
