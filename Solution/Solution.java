@@ -3268,6 +3268,46 @@ class NumArray {
         return head; 
     }
 
+    /*
+     * 2799. Count Complete Subarrays in an Array
+
+        You are given an array nums consisting of positive integers.
+
+        We call a subarray of an array complete if the following condition is satisfied:
+
+        The number of distinct elements in the subarray is equal to the number of distinct elements in the whole array.
+        Return the number of complete subarrays.
+
+        A subarray is a contiguous non-empty part of an array.
+     */
+
+
+     public int countCompleteSubarrays(int[] nums) {
+        int n =nums.length;
+        int ans=0;
+        HashSet<Integer> set =new HashSet<>();
+        for (int num:nums) {
+            set.add(num);
+        }
+        HashMap<Integer, Integer> map =new HashMap<>();
+        int st =0;
+        int end =0;
+        int k =set.size();
+        while (end<n){
+            map.put(nums[end],map.getOrDefault(nums[end],0)+1);
+            while (map.size()==k){
+                ans +=n-end;
+                map.put(nums[st],map.get(nums[st])-1);
+                if(map.get(nums[st])==0){
+                    map.remove(nums[st]);
+                }
+                st++;
+            }
+            end++;
+        }
+        return ans;
+    }
+
     
 
     
