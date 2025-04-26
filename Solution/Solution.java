@@ -3337,6 +3337,116 @@ class NumArray {
         return list; 
     }
 
+    /*
+     Q1. Find the Most Common Response
+
+        You are given a 2D string array responses where each responses[i] is an array of strings representing survey responses from the ith day.
+
+        Return the most common response across all days after removing duplicate responses within each responses[i]. If there is a tie, return the lexicographically smallest response.
+
+        A string a is lexicographically smaller than a string b if in the first position where a and b differ, string a has a letter that appears earlier in the alphabet than the corresponding letter in b.
+        If the first min(a.length, b.length) characters do not differ, then the shorter string is the lexicographically smaller one.
+     */
+
+
+    public String findCommonResponse(List<List<String>> responses) {
+        List<HashSet<String>> arr = new ArrayList<>();
+        for (List<String> response : responses) {
+            arr.add(new HashSet<>(response));
+        }
+
+        HashMap<String, Integer> map = new HashMap<>();
+        for (HashSet<String> set : arr) {
+            for (String st : set) {
+                map.put(st, map.getOrDefault(st, 0) + 1);
+            }
+        }
+
+        String ans = "";
+        int max_val = 0;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > max_val) {
+                max_val = entry.getValue();
+                ans = entry.getKey();
+            } else if (entry.getValue() == max_val) {
+                if (ans.equals("") || entry.getKey().compareTo(ans) < 0) {
+                    ans = entry.getKey();
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    /*
+     * Q2. Unit Conversion I
+
+        There are n types of units indexed from 0 to n - 1. You are given a 2D integer array conversions of length n - 1, where conversions[i] = [sourceUniti, targetUniti, conversionFactori]. This indicates that a single unit of type sourceUniti is equivalent to conversionFactori units of type targetUniti.
+
+        Return an array baseUnitConversion of length n, where baseUnitConversion[i] is the number of units of type i equivalent to a single unit of type 0. Since the answer may be large, return each baseUnitConversion[i] modulo 109 + 7.
+     */
+
+
+    static final int MOD = 1_000_000_007;
+    
+    public int[] baseUnitConversions(int[][] conversions) {
+        int n = conversions.length + 1;
+        List<List<int[]>> graph = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+        
+        // Build the graph
+        for (int[] conv : conversions) {
+            int u = conv[0], v = conv[1], factor = conv[2];
+            graph.get(u).add(new int[]{v, factor});
+            graph.get(v).add(new int[]{u, -factor});  // Negative factor to indicate "reverse" direction
+        }
+        
+        int[] ans = new int[n];
+        boolean[] visited = new boolean[n];
+        
+        ans[0] = 1;
+        dfs(0, graph, ans, visited);
+        
+        for (int i = 0; i < n; i++) {
+            ans[i] = (ans[i] % MOD + MOD) % MOD;
+        }
+        
+        return ans;
+    }
+
+    private void dfs(int node, List<List<int[]>> graph, int[] ans, boolean[] visited) {
+        visited[node] = true;
+        for (int[] next : graph.get(node)) {
+            int neighbor = next[0];
+            int factor = next[1];
+            if (!visited[neighbor]) {
+                if (factor > 0) {
+                    ans[neighbor] = (int)((1L * ans[node] * factor) % MOD);
+                } else {
+                    ans[neighbor] = (int)((1L * ans[node] * modInverse(-factor, MOD)) % MOD);
+                }
+                dfs(neighbor, graph, ans, visited);
+            }
+        }
+    }
+    
+    private int modInverse(int a, int mod) {
+        return pow(a, mod - 2, mod);
+    }
+    
+    private int pow(int a, int b, int mod) {
+        int result = 1;
+        while (b > 0) {
+            if ((b & 1) == 1) result = (int)((1L * result * a) % mod);
+            a = (int)((1L * a * a) % mod);
+            b >>= 1;
+        }
+        return result;
+    }
+
     
 
     
