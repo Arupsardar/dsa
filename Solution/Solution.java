@@ -3447,6 +3447,57 @@ class NumArray {
         return result;
     }
 
+
+    /*
+     * 3531. Count Covered Buildings
+
+        You are given a positive integer n, representing an n x n city. You are also given a 2D grid buildings, where buildings[i] = [x, y] denotes a unique building located at coordinates [x, y].
+
+        A building is covered if there is at least one building in all four directions: left, right, above, and below.
+
+        Return the number of covered buildings.
+     */
+    public int countCoveredBuildings(int n, int[][] buildings) {
+        Map<Integer, TreeSet<Integer>> rowMap = new HashMap<>();
+        Map<Integer, TreeSet<Integer>> colMap = new HashMap<>();
+
+        // Build rowMap and colMap
+        for (int[] b : buildings) {
+            int x = b[0], y = b[1];
+
+            rowMap.putIfAbsent(x, new TreeSet<>());
+            rowMap.get(x).add(y);
+
+            colMap.putIfAbsent(y, new TreeSet<>());
+            colMap.get(y).add(x);
+        }
+
+        int count = 0;
+
+        // Check each building
+        for (int[] b : buildings) {
+            int x = b[0], y = b[1];
+
+            boolean hasLeft = false, hasRight = false, hasUp = false, hasDown = false;
+
+            // Check left and right in row
+            TreeSet<Integer> rowSet = rowMap.get(x);
+            if (rowSet.lower(y) != null) hasLeft = true;
+            if (rowSet.higher(y) != null) hasRight = true;
+
+            // Check up and down in column
+            TreeSet<Integer> colSet = colMap.get(y);
+            if (colSet.lower(x) != null) hasUp = true;
+            if (colSet.higher(x) != null) hasDown = true;
+
+            if (hasLeft && hasRight && hasUp && hasDown) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     
 
     
