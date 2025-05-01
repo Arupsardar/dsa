@@ -3562,6 +3562,39 @@ class NumArray {
         return beforeDummy.next;
     }
 
+    /*
+     * 92. Reverse Linked List II
+
+        Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return the reversed list.
+     */
+
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) return head;
+
+        // Create a dummy node to simplify edge cases
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        // Step 1: Move `prev` to the node before the `left` position
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
+        }
+
+        // Step 2: Reverse sublist from left to right
+        ListNode current = prev.next;
+        ListNode next = null;
+        for (int i = 0; i < right - left; i++) {
+            next = current.next;
+            current.next = next.next;
+            next.next = prev.next;
+            prev.next = next;
+        }
+
+        return dummy.next;
+    }
+
     
 
     
