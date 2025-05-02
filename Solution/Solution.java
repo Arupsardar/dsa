@@ -3595,6 +3595,29 @@ class NumArray {
         return dummy.next;
     }
 
+    /*
+     * 206. Reverse Linked List
+
+        Given the head of a singly linked list, reverse the list, and return the reversed list.
+     */
+
+
+    public ListNode reverseList(ListNode head) {
+        ListNode prev =null;
+        ListNode curr =head;
+        ListNode next =null;
+
+        ListNode dummu =new ListNode(0);
+        while (curr !=null) {
+            next =curr.next;
+            curr.next =prev;
+            prev =curr;
+            curr =next;       
+        }
+        return prev;
+        
+    }
+
     
 
     
