@@ -3649,6 +3649,83 @@ class NumArray {
         return slow;
     }
 
+    /*
+     * Q1. Maximum Product of Two Digits
+
+        You are given a positive integer n.
+
+        Return the maximum product of any two digits in n.
+
+        Note: You may use the same digit twice if it appears more than once in n.
+     */
+
+
+    public int maxProduct(int n) {
+        String s = Integer.toString(n);
+        int[] digits = new int[s.length()];
+        for (int i = 0; i < s.length(); i++) {
+            digits[i] = s.charAt(i) - '0';
+        }
+
+        int maxProduct = 0;
+        for (int i = 0; i < digits.length; i++) {
+            for (int j = i+1; j < digits.length; j++) {
+                int product = digits[i] * digits[j];
+                if (product > maxProduct) {
+                    maxProduct = product;
+                }
+            }
+        }
+        return maxProduct;
+    }
+
+    /*
+     Q2. Fill a Special Grid
+     
+        You are given a non-negative integer n representing a 2n x 2n grid. You must fill the grid with integers from 0 to 22n - 1 to make it special. A grid is special if it satisfies all the following conditions:
+
+        All numbers in the top-right quadrant are smaller than those in the bottom-right quadrant.
+        All numbers in the bottom-right quadrant are smaller than those in the bottom-left quadrant.
+        All numbers in the bottom-left quadrant are smaller than those in the top-left quadrant.
+        Each of its quadrants is also a special grid.
+        Return the special 2n x 2n grid.
+
+        Note: Any 1x1 grid is special.
+     */
+
+
+    public int[][] specialGrid(int N) {
+        int size = 1 << N;
+        return build(size, 0);
+    }
+
+    private int[][] build(int size, int start) {
+        if (size == 1) {
+            return new int[][]{{start}};
+        }
+
+        int half = size / 2;
+        int offset = (size * size) / 4;
+
+        int[][] topRight = build(half, start);
+        int[][] bottomRight = build(half, start + offset);
+        int[][] bottomLeft = build(half, start + 2 * offset);
+        int[][] topLeft = build(half, start + 3 * offset);
+
+        int[][] grid = new int[size][size];
+
+        for (int i = 0; i < half; i++) {
+            for (int j = 0; j < half; j++) {
+                grid[i][j + half] = topRight[i][j];
+                grid[i + half][j + half] = bottomRight[i][j];
+                grid[i + half][j] = bottomLeft[i][j];
+                grid[i][j] = topLeft[i][j];
+            }
+        }
+
+        return grid;
+    }
+
     
 
     
