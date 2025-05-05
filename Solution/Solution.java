@@ -3681,7 +3681,7 @@ class NumArray {
 
     /*
      Q2. Fill a Special Grid
-     
+
         You are given a non-negative integer n representing a 2n x 2n grid. You must fill the grid with integers from 0 to 22n - 1 to make it special. A grid is special if it satisfies all the following conditions:
 
         All numbers in the top-right quadrant are smaller than those in the bottom-right quadrant.
@@ -3724,6 +3724,45 @@ class NumArray {
         }
 
         return grid;
+    }
+
+    /*
+     * 54. Spiral Matrix
+
+        Given an m x n matrix, return all elements of the matrix in spiral order.
+     */
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ans =new ArrayList<>();
+        int top =0,bottom =matrix.length-1;
+        int left =0,right =matrix[0].length-1;
+        
+        while (top <= bottom && left <= right) {
+
+
+            for (int i = left; i <= right; i++) {
+                ans.add(matrix[top][i]);
+            }
+            top++;
+            for (int i = top; i <= bottom; i++) {
+                ans.add(matrix[i][right]);
+            }
+            right--;
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    ans.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            if(left <=right){
+                for (int i = bottom; i >= top; i--) {
+                    ans.add(matrix[i][left]);
+                }
+                left++;
+            }
+        }
+        
+        return ans;
     }
 
     
