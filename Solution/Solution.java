@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import strucher.ListNode;
 import strucher.TreeNode;
+import Concurrency.das.*;
+
 
 public class Solution {
     /*
@@ -3764,6 +3766,41 @@ class NumArray {
         
         return ans;
     }
+
+    /*
+     * 106. Construct Binary Tree from Inorder and Postorder Traversal
+
+            Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
+     */
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        return buildTree(inorder,postorder,0,inorder.length-1,0,postorder.length-1);
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder,int inst,int inend,int postst,int postend) {
+        if (inst > inend || postst > postend) {
+            return null; 
+        }
+        TreeNode root =new TreeNode(postorder[postend]);
+    
+        int index =-1;
+        for(int i=inst;i<=inend;i++){
+            if(inorder[i]==postorder[postend]){
+                index =i;
+                break;
+            }
+        }
+
+        int leftSize = index - inst;
+
+    root.left = buildTree(inorder, postorder, inst, index - 1, postst, postst + leftSize - 1);
+    root.right = buildTree(inorder, postorder, index + 1, inend, postst + leftSize, postend - 1);
+
+
+        return root;
+    }
+
+
 
     
 
