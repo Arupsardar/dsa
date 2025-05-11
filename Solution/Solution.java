@@ -3955,6 +3955,37 @@ class NumArray {
         return max;
     }
 
+    /*
+     * Q1. Minimum Deletions for At Most K Distinct Characters
+
+        You are given a string s consisting of lowercase English letters, and an integer k.
+
+        Your task is to delete some (possibly none) of the characters in the string so that the number of distinct characters in the resulting string is at most k.
+
+        Return the minimum number of deletions required to achieve this.
+     */
+
+    public int minDeletion(String s, int k) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+        }
+
+        if (freqMap.size() <= k) return 0;
+
+        List<Integer> freqList = new ArrayList<>(freqMap.values());
+        Collections.sort(freqList); // Sort ascending
+
+        int deletions = 0;
+        int removeCount = freqMap.size() - k;
+
+        for (int i = 0; i < removeCount; i++) {
+            deletions += freqList.get(i); // Delete entire character
+        }
+
+        return deletions;
+    }
+
     
 
     
