@@ -3986,6 +3986,35 @@ class NumArray {
         return deletions;
     }
 
+
+
+
+
+    public int[] findEvenNumbers(int[] digits) {
+        Set<Integer> result = new HashSet<>();
+
+        int n = digits.length;
+
+        for (int i = 0; i < n; i++) {
+            if (digits[i] == 0) continue; // skip if leading digit is 0
+            for (int j = 0; j < n; j++) {
+                if (i == j) continue;
+                for (int k = 0; k < n; k++) {
+                    if (i == k || j == k) continue;
+                    int num = digits[i] * 100 + digits[j] * 10 + digits[k];
+                    if (num % 2 == 0) {
+                        result.add(num);
+                    }
+                }
+            }
+        }
+
+        // Convert set to sorted array
+        int[] res = result.stream().mapToInt(Integer::intValue).toArray();
+        Arrays.sort(res);
+        return res;
+    }
+
     
 
     
