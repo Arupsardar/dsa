@@ -4153,6 +4153,31 @@ class NumArray {
         return true;
     }
 
+    /*
+     * 268. Missing Number
+
+        Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+
+     */
+
+    public int missingNumber(int[] nums) {
+        int len =nums.length;
+        boolean[] arr =new boolean[len+1];
+
+        for(int i=0;i<len;i++){
+            arr[nums[i]]=true;
+        }
+        int mn =-1;
+        for(int i=0;i<len+1;i++){
+            if(!arr[i]){
+                mn=i;
+            }
+        }
+        return mn;
+        
+    }
+
     
 
     
