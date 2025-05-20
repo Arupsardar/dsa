@@ -4204,6 +4204,25 @@ class NumArray {
         return num;
     }
 
+    /*
+     * 1980. Find Unique Binary String
+
+        Given an array of strings nums containing n unique binary strings each of length n, return a binary string of length n that does not appear in nums. If there are multiple answers, you may return any of them.
+     */
+
+
+    public String findDifferentBinaryString(String[] nums) {
+        int n = nums.length;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; i++) {
+            // Flip the i-th bit of the i-th string
+            sb.append(nums[i].charAt(i) == '0' ? '1' : '0');
+        }
+
+        return sb.toString();
+    }
+
     
 
     
