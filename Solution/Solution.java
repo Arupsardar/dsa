@@ -4298,6 +4298,36 @@ class NumArray {
    return false; 
 }
 
+public boolean isBalanced(TreeNode root) {
+        
+}
+
+public boolean check(TreeNode root){
+   if(root==null){
+     return true;
+   }
+   int lfh =heightleft(root.left);
+   int rfh =heightRight(root.right);
+   if(Math.abs(lfh-rfh)>1)return false;
+   return (check(root.left)||check(root.right));
+}
+
+public int heightleft(TreeNode root){
+    if(root==null){
+        return 0;
+    }
+
+    return 1+heightleft(root.left);
+}
+
+public int heightRight(TreeNode root){
+    if(root==null){
+        return 0;
+    }
+
+    return 1+heightRight(root.right);
+}
+
     
 
     
