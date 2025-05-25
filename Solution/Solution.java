@@ -4298,35 +4298,58 @@ class NumArray {
    return false; 
 }
 
-public boolean isBalanced(TreeNode root) {
-        
-}
+    /*
+    * 110. Balanced Binary Tree
 
-public boolean check(TreeNode root){
-   if(root==null){
-     return true;
-   }
-   int lfh =heightleft(root.left);
-   int rfh =heightRight(root.right);
-   if(Math.abs(lfh-rfh)>1)return false;
-   return (check(root.left)||check(root.right));
-}
+    Given a binary tree, determine if it is height-balanced.
+    */
 
-public int heightleft(TreeNode root){
-    if(root==null){
-        return 0;
+    public boolean isBalanced(TreeNode root) {
+    return check(root) !=-1;  
     }
 
-    return 1+heightleft(root.left);
-}
+    private int check(TreeNode root) {
+        if (root == null) return 0;
 
-public int heightRight(TreeNode root){
-    if(root==null){
-        return 0;
+        int left = check(root.left);
+        if (left == -1) return -1;
+
+        int right = check(root.right);
+        if (right == -1) return -1;
+
+        if (Math.abs(left - right) > 1) return -1;
+
+        return 1 + Math.max(left, right);
     }
 
-    return 1+heightRight(root.right);
-}
+    public int height(TreeNode root){
+        if(root==null){
+            return 0;
+        }
+        return 1+(Math.max(height(root.left),height(root.right)));
+    }
+
+    /*
+     * 222. Count Complete Tree Nodes
+
+        Given the root of a complete binary tree, return the number of the nodes in the tree.
+
+        According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+
+        Design an algorithm that runs in less than O(n) time complexity.
+     */
+
+
+        public int countNodes(TreeNode root) {
+        return countNodes2(root);
+        }
+
+        public int countNodes2(TreeNode root) {
+            if(root==null){
+                return 0;
+            }
+            return 1+countNodes2(root.left)+countNodes2(root.right);
+        }
 
     
 
