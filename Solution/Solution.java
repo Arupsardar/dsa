@@ -4351,6 +4351,93 @@ class NumArray {
             return 1+countNodes2(root.left)+countNodes2(root.right);
         }
 
+        /*
+         * 36. Valid Sudoku
+
+            Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+            Each row must contain the digits 1-9 without repetition.
+            Each column must contain the digits 1-9 without repetition.
+            Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+            Note:
+
+            A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+            Only the filled cells need to be validated according to the mentioned rules.
+         */
+
+
+        public boolean isValidSudoku(char[][] board) {
+            boolean[][] rows = new boolean[9][9];
+            boolean[][] cols = new boolean[9][9];
+            boolean[][] boxes = new boolean[9][9];
+    
+            for (int i = 0; i < 9; i++) {         // row
+                for (int j = 0; j < 9; j++) {     // col
+                    char ch = board[i][j];
+                    if (ch != '.') {
+                        int num = ch - '1'; // '1' to '9' => 0 to 8
+    
+                        // Box index from row and column
+                        int boxIndex = (i / 3) * 3 + j / 3;
+    
+                        // Check for duplicates
+                        if (rows[i][num] || cols[j][num] || boxes[boxIndex][num]) {
+                            return false;
+                        }
+    
+                        // Mark the digit as seen
+                        rows[i][num] = true;
+                        cols[j][num] = true;
+                        boxes[boxIndex][num] = true;
+                    }
+                }
+            }
+    
+            return true;
+        }
+
+
+        public void solveSudoku(char[][] board) {
+            solve(board);
+        }
+    
+        private boolean solve(char[][] board) {
+            for (int row = 0; row < 9; row++) {
+                for (int col = 0; col < 9; col++) {
+                    if (board[row][col] == '.') {
+                        // Try digits 1 to 9
+                        for (char num = '1'; num <= '9'; num++) {
+                            if (isValid(board, row, col, num)) {
+                                board[row][col] = num;
+    
+                                if (solve(board)) {
+                                    return true;
+                                }
+    
+                                // backtrack
+                                board[row][col] = '.';
+                            }
+                        }
+                        return false; // no valid number found, backtrack
+                    }
+                }
+            }
+            return true; // puzzle solved
+        }
+    
+        private boolean isValid(char[][] board, int row, int col, char num) {
+            for (int i = 0; i < 9; i++) {
+                // Check row and column
+                if (board[row][i] == num || board[i][col] == num) return false;
+    
+                // Check 3x3 box
+                int boxRow = 3 * (row / 3) + i / 3;
+                int boxCol = 3 * (col / 3) + i % 3;
+                if (board[boxRow][boxCol] == num) return false;
+            }
+            return true;
+        }
+
     
 
     
