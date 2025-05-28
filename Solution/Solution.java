@@ -4467,6 +4467,36 @@ class NumArray {
             
         }
 
+        /*
+         * 409. Longest Palindrome
+
+        Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
+
+        Letters are case sensitive, for example, "Aa" is not considered a palindrome.
+         */
+
+
+        public int longestPalindrome(String s) {
+            Set<Character> set = new HashSet<>();
+              int length = 0;
+      
+              for (char c : s.toCharArray()) {
+                  if (set.contains(c)) {
+                      length += 2;
+                      set.remove(c);  // complete a pair
+                  } else {
+                      set.add(c);     // wait for a pair
+                  }
+              }
+      
+              // If there's any character left in the set, one odd char can go in the center
+              if (!set.isEmpty()) {
+                  length += 1;
+              }
+      
+              return length;  
+          }
+
     
 
     
