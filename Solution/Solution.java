@@ -4539,6 +4539,39 @@ class NumArray {
             return nu==num;
         }
 
+        /*
+         * 1685. Sum of Absolute Differences in a Sorted Array
+
+            You are given an integer array nums sorted in non-decreasing order.
+
+            Build and return an integer array result with the same length as nums such that result[i] is equal to the summation of absolute differences between nums[i] and all the other elements in the array.
+
+            In other words, result[i] is equal to sum(|nums[i]-nums[j]|) where 0 <= j < nums.length and j != i (0-indexed).
+         */
+
+
+        public int[] getSumAbsoluteDifferences(int[] nums) {
+            int n = nums.length;
+            int[] result = new int[n];
+            int[] prefixSum = new int[n];
+
+            prefixSum[0] = nums[0];
+            for (int i = 1; i < n; i++) {
+                prefixSum[i] = prefixSum[i - 1] + nums[i];
+            }
+
+            for (int i = 0; i < n; i++) {
+                int leftSum = i > 0 ? prefixSum[i - 1] : 0;
+                int rightSum = prefixSum[n - 1] - prefixSum[i];
+                int left = nums[i] * i - leftSum;
+                int right = rightSum - nums[i] * (n - i - 1);
+                result[i] = left + right;
+            }
+
+            return result;
+            
+        }
+
     
 
     
