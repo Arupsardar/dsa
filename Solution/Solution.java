@@ -4572,6 +4572,63 @@ class NumArray {
             
         }
 
+        /*
+         * 3380. Maximum Area Rectangle With Point Constraints I
+
+                You are given an array points where points[i] = [xi, yi] represents the coordinates of a point on an infinite plane.
+
+                Your task is to find the maximum area of a rectangle that:
+
+                Can be formed using four of these points as its corners.
+                Does not contain any other point inside or on its border.
+                Has its edges parallel to the axes.
+                Return the maximum area that you can obtain or -1 if no such rectangle is possible.
+         */
+
+
+        public static int maxRectangleArea(int[][] points) {
+            int maxArea = -1;
+            for (int i = 0; i < points.length; i++) {
+                for (int j = i + 1; j < points.length; j++) {
+                    var p1 = points[i];
+                    var p2 = points[j];
+                    if (p1[0] == p2[0] || p1[1] == p2[1]) {
+                        continue;
+                    }
+                    int count = 0;
+                    for (var p : points) {
+                        if (p[0] == p1[0] && p[1] == p2[1] || p[0] == p2[0] && p[1] == p1[1]) {
+                            count++;
+                        }
+                    }
+                    if (count == 2) {
+                        //System.out.println("Found: [" + p1[0] + "," + p1[1] + "] [" + p2[0] + "," + p2[1] +"]");
+                        count = 0;
+                        for (var p : points) {
+                            if (
+                                (
+                                    (p1[0] >= p[0] && p[0] >= p2[0])
+                                    || (p2[0] >= p[0] && p[0] >= p1[0])
+                                )
+                            &&  (
+                                    (p1[1] >= p[1] && p[1] >= p2[1])
+                                    || (p2[1] >= p[1] && p[1] >= p1[1])
+                                )
+                            ) {
+                                count++;
+                            }
+                        }
+                        //System.out.println(count);
+                        if (count == 4) {
+                            maxArea = Math.max(maxArea, Math.abs(p1[0] - p2[0]) * Math.abs(p1[1] - p2[1]));
+                        }
+                    }
+                }
+            }
+    
+            return maxArea;
+        }
+
     
 
     
