@@ -4665,6 +4665,51 @@ class NumArray {
             return true;
         }
 
+        /*
+         * 2698. Find the Punishment Number of an Integer
+
+            Given a positive integer n, return the punishment number of n.
+
+            The punishment number of n is defined as the sum of the squares of all integers i such that:
+
+            1 <= i <= n
+            The decimal representation of i * i can be partitioned into contiguous substrings such that the sum of the integer values of these substrings equals i.
+         */
+
+
+        public int punishmentNumber(int n) {
+            int sum =0;
+            for(int i=0;i<=n;i++){
+                if(isKaprekarLike(i)){
+                   sum +=i*i;
+                }
+            }
+            return sum;
+            
+        }
+    
+        public boolean isKaprekarLike(int i) {
+            String sqStr = String.valueOf(i * i);
+            return canPartition(sqStr, 0, i);
+        }
+    
+        private boolean canPartition(String s, int index, int remaining) {
+            if (index == s.length()) {
+                return remaining == 0;
+            }
+    
+            int num = 0;
+            for (int j = index; j < s.length(); j++) {
+                num = num * 10 + (s.charAt(j) - '0');
+                if (num > remaining) break; // Prune unnecessary paths
+                if (canPartition(s, j + 1, remaining - num)) {
+                    return true;
+                }
+            }
+    
+            return false;
+        }
+
     
 
     
