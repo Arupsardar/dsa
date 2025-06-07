@@ -3773,32 +3773,32 @@ class NumArray {
             Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree, construct and return the binary tree.
      */
 
-    public TreeNode buildTree(int[] inorder, int[] postorder) {
-        return buildTree(inorder,postorder,0,inorder.length-1,0,postorder.length-1);
-    }
+    // public TreeNode buildTree(int[] inorder, int[] postorder) {
+    //     return buildTree(inorder,postorder,0,inorder.length-1,0,postorder.length-1);
+    // }
 
-    public TreeNode buildTree(int[] inorder, int[] postorder,int inst,int inend,int postst,int postend) {
-        if (inst > inend || postst > postend) {
-            return null; 
-        }
-        TreeNode root =new TreeNode(postorder[postend]);
+    // public TreeNode buildTree(int[] inorder, int[] postorder,int inst,int inend,int postst,int postend) {
+    //     if (inst > inend || postst > postend) {
+    //         return null; 
+    //     }
+    //     TreeNode root =new TreeNode(postorder[postend]);
     
-        int index =-1;
-        for(int i=inst;i<=inend;i++){
-            if(inorder[i]==postorder[postend]){
-                index =i;
-                break;
-            }
-        }
+    //     int index =-1;
+    //     for(int i=inst;i<=inend;i++){
+    //         if(inorder[i]==postorder[postend]){
+    //             index =i;
+    //             break;
+    //         }
+    //     }
 
-        int leftSize = index - inst;
+    //     int leftSize = index - inst;
 
-    root.left = buildTree(inorder, postorder, inst, index - 1, postst, postst + leftSize - 1);
-    root.right = buildTree(inorder, postorder, index + 1, inend, postst + leftSize, postend - 1);
+    // root.left = buildTree(inorder, postorder, inst, index - 1, postst, postst + leftSize - 1);
+    // root.right = buildTree(inorder, postorder, index + 1, inend, postst + leftSize, postend - 1);
 
 
-        return root;
-    }
+    //     return root;
+    // }
 
     /*
      412. Fizz Buzz
@@ -4769,6 +4769,127 @@ class NumArray {
             }
             
         }
+
+        /*
+         * 2384. Largest Palindromic Number
+
+            You are given a string num consisting of digits only.
+
+            Return the largest palindromic integer (in the form of a string) that can be formed using digits taken from num. It should not contain leading zeroes.
+
+            Notes:
+
+            You do not need to use all the digits of num, but you must use at least one digit.
+            The digits can be reordered.
+
+         */
+
+
+        public String largestPalindromic(String num) {
+           int[] arr = new int[10];
+            StringBuilder sb = new StringBuilder();
+            for(char c: num.toCharArray()){
+                arr[c-'0']++;                       
+            }
+            int mid = -1;
+            boolean flag = true;
+            for(int i = 9; i>=0; i--){
+                if(arr[i]==0) continue;
+                if(arr[i] % 2 == 1 && flag){             
+                    mid = i;
+                    flag = false;
+                }
+                if(i==0 && sb.length()==0) break;            
+                int t = arr[i] / 2; 
+                while(t-- > 0) sb.append(i);                 
+            }
+            StringBuilder rev = new StringBuilder(sb).reverse();
+            sb.append(rev);                                   
+            if(mid!=-1) sb.insert(sb.length()/2, mid);
+            return (sb.length() == 0) ? "0" : sb.toString() ;
+        }
+
+
+        public String largestPalindromic2(String num) {
+        char[] ch = num.toCharArray();
+        int n = ch.length;
+        int[] hash = new int[10];
+        for(int i = 0 ; i < n ; i++){
+            hash[ch[i] - '0']++;
+        }
+        if(hash[0] == n){
+            return "0";
+        }
+        StringBuilder first = new StringBuilder();
+        char middle = 'a';
+        boolean middle_flag = true;
+        for(int i = 9 ; i >= 0 ; i--){
+            if(middle_flag && hash[i] % 2 != 0){
+                middle_flag = false;
+                middle = (char)(i + '0');
+            }
+            int freq = hash[i] / 2;
+            while(freq-- > 0){
+                first.append(i);
+            }
+        }
+        if(first.length() > 0 && first.charAt(0) == '0'){
+            return String.valueOf(middle);
+        }
+        StringBuilder last = new StringBuilder(first);
+        if(!middle_flag){
+            first.append(middle);
+        }
+        first.append(last.reverse());
+        return new String(first);
+    }
+
+    public String largestPalindromic3(String num) {
+       int[] freq = new int[10];
+
+        for (char c : num.toCharArray()) {
+            freq[c - '0']++;
+        }
+
+        StringBuilder firstHalf = new StringBuilder();
+        String middle = "";
+
+        // Build the first half from 9 to 0
+        for (int i = 9; i >= 0; i--) {
+            // Use the even part of the frequency
+            int pairs = freq[i] / 2;
+            for (int j = 0; j < pairs; j++) {
+                firstHalf.append(i);
+            }
+            freq[i] %= 2; // 0 or 1 left
+        }
+
+        // Remove leading zeros from the firstHalf
+        while (firstHalf.length() > 0 && firstHalf.charAt(0) == '0') {
+            firstHalf.deleteCharAt(0);
+        }
+
+        // If firstHalf is empty and no valid middle digit, return "0"
+        if (firstHalf.length() == 0) {
+            for (int i = 9; i >= 0; i--) {
+                if (freq[i] > 0) {
+                    return String.valueOf(i);
+                }
+            }
+            return "0";
+        }
+
+        // Find the largest digit with frequency 1 (can be middle)
+        for (int i = 9; i >= 0; i--) {
+            if (freq[i] > 0) {
+                middle = String.valueOf(i);
+                break;
+            }
+        }
+
+        String secondHalf = new StringBuilder(firstHalf).reverse().toString();
+        return firstHalf.toString() + middle + secondHalf;
+    }
 
     
 
