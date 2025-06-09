@@ -4925,6 +4925,28 @@ class NumArray {
         return arr;
     }
 
+    /*
+     * 3083. Existence of a Substring in a String and Its Reverse
+
+        Given a string s, find any substring of length 2 which is also present in the reverse of s.
+
+        Return true if such a substring exists, and false otherwise.
+     */
+
+
+    public boolean isSubstringPresent(String s) {
+        String reversed = new StringBuilder(s).reverse().toString();
+
+        for (int i = 0; i < s.length() - 1; i++) {
+            String sub = s.substring(i, i + 2);
+            if (reversed.contains(sub)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     
 
     
