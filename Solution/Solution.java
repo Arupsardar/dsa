@@ -4947,6 +4947,29 @@ class NumArray {
         return false;
     }
 
+    /*
+     * 3153. Sum of Digit Differences of All Pairs
+
+        You are given an array nums consisting of positive integers where all integers have the same number of digits.
+
+        The digit difference between two integers is the count of different digits that are in the same position in the two integers.
+
+        Return the sum of the digit differences between all pairs of integers in nums.
+     */
+
+     public long sumDigitDifferences(int[] A) {
+        int n = A.length, m = String.valueOf(A[0]).length();
+        int[][] count = new int[m][10];
+        long res = 1L * n * (n - 1) / 2 * m;
+        for (int a : A) {
+            for (int i = 0; i < m && a > 0; i++) {
+                res -= count[i][a % 10]++;
+                a /= 10;
+            }
+        }
+        return res;
+    }
+
     
 
     
