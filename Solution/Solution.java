@@ -4970,6 +4970,32 @@ class NumArray {
         return res;
     }
 
+    /*
+     * 477. Total Hamming Distance
+
+        The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+
+        Given an integer array nums, return the sum of Hamming distances between all the pairs of the integers in nums.
+     */
+
+
+    public int totalHammingDistance(int[] nums) {
+        int n = nums.length;
+        int total = 0;
+
+        for (int i = 0; i < 32; i++) {
+            int bitCount = 0;
+            for (int num : nums) {
+                if (((num >> i) & 1) == 1) {
+                    bitCount++;
+                }
+            }
+            total += bitCount * (n - bitCount);
+        }
+
+        return total;
+    }
+
     
 
     
