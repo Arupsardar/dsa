@@ -5051,6 +5051,28 @@ class NumArray {
         return result;
     }
 
+
+    public int[] frequencySort(int[] nums) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+
+        for (int num : nums) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Convert to Integer[] for custom sort
+        Integer[] arr = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+
+        Arrays.sort(arr, (a, b) -> {
+            int fa = freqMap.get(a), fb = freqMap.get(b);
+            if (fa != fb) return fa - fb;
+            return b - a;
+        });
+
+        // Convert back to int[]
+        return Arrays.stream(arr).mapToInt(Integer::intValue).toArray();
+        
+    }
+
     
 
     
