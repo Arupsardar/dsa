@@ -5073,6 +5073,44 @@ class NumArray {
         
     }
 
+    /*
+     * 692. Top K Frequent Words
+
+        Given an array of strings words and an integer k, return the k most frequent strings.
+
+        Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+
+     */
+
+
+    public List<String> topKFrequent(String[] words, int k) {
+       HashMap<String, Integer> map = new HashMap<>();
+    
+        for (String word : words) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+        }
+
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(map.entrySet());
+
+        // Sort by frequency desc, then lex asc
+        list.sort((a, b) -> {
+            if (!a.getValue().equals(b.getValue())) {
+                return b.getValue() - a.getValue(); // freq descending
+            } else {
+                return a.getKey().compareTo(b.getKey()); // word ascending
+            }
+        });
+
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            result.add(list.get(i).getKey());
+        }
+
+        return result;
+        
+    }
+
     
 
     
