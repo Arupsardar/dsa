@@ -5111,6 +5111,47 @@ class NumArray {
         
     }
 
+    /*
+     * 2190. Most Frequent Number Following Key In an Array
+
+            You are given a 0-indexed integer array nums. You are also given an integer key, which is present in nums.
+
+            For every unique integer target in nums, count the number of times target immediately follows an occurrence of key in nums. In other words, count the number of indices i such that:
+
+            0 <= i <= nums.length - 2,
+            nums[i] == key and,
+            nums[i + 1] == target.
+            Return the target with the maximum count. The test cases will be generated such that the target with maximum count is unique.
+
+
+     */
+
+
+    public int mostFrequent(int[] nums, int key) {
+        int[] result = new int[1001];  // Slightly bigger size to avoid edge issues
+
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] == key) {
+                int next = nums[i + 1];
+                if (next >= 0 && next < result.length) {
+                    result[next]++;
+                }
+            }
+        }
+
+        int max = 0;
+        int ans = 0;
+
+        for (int i = 0; i < result.length; i++) {
+            if (result[i] > max) {
+                max = result[i];
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+
     
 
     
