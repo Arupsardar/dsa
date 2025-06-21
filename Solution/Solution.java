@@ -5220,6 +5220,27 @@ class NumArray {
         return num + 2*t;
     }
 
+
+    public int alternateDigitSum(int n) {
+        int sum =0;
+        ArrayList<Integer> list =new ArrayList<>();
+        while(n>0){
+            list.add(n%10);
+            n =n/10;
+        }
+
+        Collections.reverse(list);
+
+        int sign = 1;
+        for (int digit : list) {
+            sum += sign * digit;
+            sign *= -1;  // alternate sign
+        }
+
+        return sum;
+        
+    }
+
     
 
     
