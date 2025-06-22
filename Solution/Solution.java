@@ -5241,6 +5241,35 @@ class NumArray {
         
     }
 
+    public String[] divideString(String s, int k, char fill) {
+        int n = s.length();
+        int arrLen = (n + k - 1) / k; // ceil(n / k)
+        String[] result = new String[arrLen];
+
+        for (int i = 0; i < arrLen; i++) {
+            int start = i * k;
+            int end = Math.min(start + k, n);
+            String part = s.substring(start, end);
+
+            // Pad if needed
+            if (part.length() < k) {
+                StringBuilder sb = new StringBuilder(part);
+                while (sb.length() < k) {
+                    sb.append(fill);
+                }
+                part = sb.toString();
+            }
+
+            result[i] = part;
+        }
+
+        return result;
+        
+    }
+
+
+    
+
     
 
     
