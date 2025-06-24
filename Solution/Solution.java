@@ -5288,6 +5288,24 @@ class NumArray {
     }
 
 
+    public int minLength(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (char c : s.toCharArray()) {
+            if (!stack.isEmpty()) {
+                char top = stack.peek();
+                if ((top == 'A' && c == 'B') || (top == 'C' && c == 'D')) {
+                    stack.pop(); // Remove the pair
+                    continue;
+                }
+            }
+            stack.push(c);
+        }
+
+        return stack.size();
+    }
+
+
     
 
     
