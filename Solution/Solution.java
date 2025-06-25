@@ -5305,6 +5305,44 @@ class NumArray {
         return stack.size();
     }
 
+    /*
+     * 686. Repeated String Match
+
+        Given two strings a and b, return the minimum number of times you should repeat string a so that string b is a substring of it. If it is impossible for b​​​​​​ to be a substring of a after repeating it, return -1.
+
+        Notice: string "abc" repeated 0 times is "", repeated 1 time is "abc" and repeated 2 times is "abcabc".
+     */
+
+    public int repeatedStringMatch(String a, String b) {
+        char[] A = a.toCharArray();
+        char[] B = b.toCharArray();
+ 
+        for(int i=0; i < A.length; i++){
+         int len = loop(A, B, i);
+         if(len > 0){
+             int count =1;
+             len = b.length()-a.length()+i;
+             count += len / a.length();
+             count += len % a.length() > 0 ? 1 : 0;
+             return count;
+         }
+         else if(len +a.length() <= 0){
+             return -1;
+         }
+        }
+        return -1;
+     }
+     private int loop(char[] a, char[] b, int start){
+          int count = start;
+         for(char c : b){
+             if(a[start % a.length] != c){
+                 return count - start;
+             }
+             start++;
+         }
+         return 1;
+ }
+
 
     
 
