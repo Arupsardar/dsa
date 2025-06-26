@@ -5334,14 +5334,21 @@ class NumArray {
      }
      private int loop(char[] a, char[] b, int start){
           int count = start;
-         for(char c : b){
-             if(a[start % a.length] != c){
-                 return count - start;
-             }
-             start++;
-         }
-         return 1;
- }
+            for(char c : b){
+                if(a[start % a.length] != c){
+                    return count - start;
+                }
+                start++;
+            }
+            return 1;
+    }
+
+
+        public boolean repeatedSubstringPattern(String s) {
+            String doubled = s + s;
+            String trimmed = doubled.substring(1, doubled.length() - 1);
+            return trimmed.contains(s);
+        }
 
 
     
