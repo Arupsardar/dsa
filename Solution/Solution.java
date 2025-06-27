@@ -5350,6 +5350,40 @@ class NumArray {
             return trimmed.contains(s);
         }
 
+        /*
+         * 2287. Rearrange Characters to Make Target String
+
+            You are given two 0-indexed strings s and target. You can take some letters from s and rearrange them to form new strings.
+
+            Return the maximum number of copies of target that can be formed by taking letters from s and rearranging them.
+
+
+         */
+
+
+        public int rearrangeCharacters(String s, String target) {
+            int[] freqS = new int[26];
+            int[] freqT = new int[26];
+    
+            for (char c : s.toCharArray()) {
+                freqS[c - 'a']++;
+            }
+    
+            for (char c : target.toCharArray()) {
+                freqT[c - 'a']++;
+            }
+    
+            int maxCopies = Integer.MAX_VALUE;
+    
+            for (int i = 0; i < 26; i++) {
+                if (freqT[i] > 0) {
+                    maxCopies = Math.min(maxCopies, freqS[i] / freqT[i]);
+                }
+            }
+    
+            return maxCopies;
+        }
+
 
     
 
