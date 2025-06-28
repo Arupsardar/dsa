@@ -5384,6 +5384,32 @@ class NumArray {
             return maxCopies;
         }
 
+        /*
+         * 3029. Minimum Time to Revert Word to Initial State I
+
+            You are given a 0-indexed string word and an integer k.
+
+            At every second, you must perform the following operations:
+
+            Remove the first k characters of word.
+            Add any k characters to the end of word.
+            Note that you do not necessarily need to add the same characters that you removed. However, you must perform both operations at every second.
+
+            Return the minimum time greater than zero required for word to revert to its initial state.
+         */
+
+
+
+        public int minimumTimeToInitialState(String word, int k) {
+            int n = word.length();
+                for (int i = 1; i * k <= n; i++) {
+                    if (word.startsWith(word.substring(i * k))) {
+                        return i;
+                    }
+                }
+                return (n + k - 1) / k;
+        }
+
 
     
 
