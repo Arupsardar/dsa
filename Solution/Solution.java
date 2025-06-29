@@ -5410,6 +5410,38 @@ class NumArray {
                 return (n + k - 1) / k;
         }
 
+        /*
+         * 
+         */
+
+
+        public int countCharacters(String[] words, String chars) {
+            int[] charFreq = new int[26];
+           for (char ch : chars.toCharArray()) {
+               charFreq[ch - 'a']++;
+           }
+   
+           int totalLength = 0;
+           for (String word : words) {
+               if (canForm(word, charFreq)) {
+                   totalLength += word.length();
+               }
+           }
+   
+           return totalLength;
+       }
+   
+       private boolean canForm(String word, int[] charFreq) {
+           int[] wordFreq = new int[26];
+           for (char ch : word.toCharArray()) {
+               wordFreq[ch - 'a']++;
+               if (wordFreq[ch - 'a'] > charFreq[ch - 'a']) {
+                   return false;
+               }
+           }
+           return true;
+       }
+
 
     
 
