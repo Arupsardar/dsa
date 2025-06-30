@@ -5443,6 +5443,44 @@ class NumArray {
        }
 
 
+    /*
+     * 482. License Key Formatting
+     
+      You are given a license key represented as a string s that consists of only alphanumeric characters and dashes. The string is separated into n + 1 groups by n dashes. You are also given an integer k.
+
+        We want to reformat the string s such that each group contains exactly k characters, except for the first group, which could be shorter than k but still must contain at least one character. Furthermore, there must be a dash inserted between two groups, and you should convert all lowercase letters to uppercase.
+
+        Return the reformatted license key.
+     */
+
+    public String licenseKeyFormatting(String s, int k) {
+        StringBuilder clean = new StringBuilder();
+
+        // Step 1: Remove dashes and convert to uppercase
+        for (char ch : s.toCharArray()) {
+            if (ch != '-') {
+                clean.append(Character.toUpperCase(ch));
+            }
+        }
+
+        // Step 2: Build result from the end in groups of k
+        StringBuilder result = new StringBuilder();
+        int count = 0;
+
+        for (int i = clean.length() - 1; i >= 0; i--) {
+            result.append(clean.charAt(i));
+            count++;
+            if (count == k && i != 0) {
+                result.append('-');
+                count = 0;
+            }
+        }
+
+        // Step 3: Reverse to correct order
+        return result.reverse().toString();
+    }
+
+
     
 
     
