@@ -5481,6 +5481,26 @@ class NumArray {
     }
 
 
+    public String[] uncommonFromSentences(String s1, String s2) {
+        Map<String, Integer> count = new HashMap<>();
+
+        // Step 1: Split and count all words from both sentences
+        for (String word : (s1 + " " + s2).split(" ")) {
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        }
+
+        // Step 2: Collect words that appear exactly once
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : count.entrySet()) {
+            if (entry.getValue() == 1) {
+                result.add(entry.getKey());
+            }
+        }
+
+        return result.toArray(new String[0]);
+    }
+
+
     
 
     
