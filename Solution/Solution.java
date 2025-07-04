@@ -5546,8 +5546,56 @@ class NumArray {
             }
         }
 
-        count += Math.min(prevRunLength, currRunLength); // for the last group
+        count += Math.min(prevRunLength, currRunLength); 
         return count;
+    }
+
+
+    public int numberOfSubstrings(String s) {
+        final int slen = s.length();
+        int[] ones = new int[slen];
+        int nextZero = slen;
+        int[] nextZeros = new int[slen];
+        for (int i = slen - 1; i >= 0; i--) {
+            if (s.charAt(i) == '0') {
+                nextZero = i;
+            } else {
+                ones[i]++;
+            }
+            nextZeros[i] = nextZero;
+        }
+        for (int i = 1; i < slen; i++) {
+            ones[i] += ones[i - 1];
+        }
+        int r = 0;
+        for (int i = 0; i < slen; i++) {
+            int zeros = 0;
+            int balance = 0;
+            a: for (int idx = i; idx < slen;) {
+                if (balance >= 0) {
+                    final int nz = nextZeros[idx];
+                    final int lastOnes = nz - idx;
+                    r += lastOnes;
+                    balance += lastOnes - zeros - ++zeros;
+                    idx = nz + 1;
+                } else {
+                    final int prevIdx = idx;
+                    idx -= balance + 1;
+                    if (idx >= slen) break a;
+                    final int deltaOnes = ones[idx] - ones[prevIdx - 1];
+                    final int newZeros = zeros - balance - deltaOnes;
+                    balance += deltaOnes - (newZeros * newZeros - zeros * zeros);
+                    zeros = newZeros;
+                    idx++;
+                }
+                if (idx <= slen && balance >= 0) {
+                    //System.out.println("*****");
+                    r++;
+                }
+            }
+            //System.out.println(i + ": " + r);
+        }
+        return r;
     }
 
 
