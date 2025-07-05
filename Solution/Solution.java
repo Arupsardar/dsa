@@ -5599,6 +5599,48 @@ class NumArray {
     }
 
 
+    public int subarray(String word,int k)
+    {
+        int left=0,right=0;
+        int count=0;
+        Map<Character,Integer>mp=new HashMap<>();
+        int n=word.length();
+        while(right<n)
+        {
+            char ch=word.charAt(right);
+            if(ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u')
+            {
+                mp.put(ch,mp.getOrDefault(ch,0)+1);
+                while(mp.size()>k)
+                {
+                    mp.put(word.charAt(left),mp.getOrDefault(word.charAt(left),0)-1);
+                    if(mp.get(word.charAt(left))==0)
+                    {
+                        mp.remove(word.charAt(left));
+
+                    }
+                    left++;
+                }
+                count+=right-left+1;
+                right++;
+            }
+            else
+            {
+                right++;
+                left=right;
+                mp.clear();
+            }
+        }
+        return count;
+    }
+    public int countVowelSubstrings(String word) {
+        int a=subarray(word,5);
+        int b=subarray(word,4);
+        return a-b;
+        
+    }
+
+
     
 
     
