@@ -5818,6 +5818,33 @@ class MyStack {
        }
         return ans;
     }
+
+
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        List<Integer> result = new ArrayList<>();
+
+        // Count frequency in nums1
+        for (int num : nums1) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+
+        // Find common elements in nums2
+        for (int num : nums2) {
+            if (map.containsKey(num) && map.get(num) > 0) {
+                result.add(num);
+                map.put(num, map.get(num) - 1); // decrease the count
+            }
+        }
+
+        // Convert list to array
+        int[] output = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            output[i] = result.get(i);
+        }
+
+        return output;
+    }
 }
 
 
