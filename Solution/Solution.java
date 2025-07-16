@@ -5912,6 +5912,15 @@ class MyStack {
 
         return root;
     }
+
+    public int kthGrammar(int n, int k) {
+        if (n == 1) return 0;
+
+        int parent = kthGrammar(n - 1, (k + 1) / 2);
+
+        boolean isKEven = (k % 2 == 0);
+        return isKEven ? 1 - parent : parent;
+    }
 }
 
 
