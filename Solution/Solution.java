@@ -5921,6 +5921,43 @@ class MyStack {
         boolean isKEven = (k % 2 == 0);
         return isKEven ? 1 - parent : parent;
     }
+
+    public List<Integer> diffWaysToCompute(String expression) {
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < expression.length(); i++) {
+            char c = expression.charAt(i);
+
+            if (c == '+' || c == '-' || c == '*') {
+                // Split into left and right
+                String leftExpr = expression.substring(0, i);
+                String rightExpr = expression.substring(i + 1);
+
+                // Recursively compute results
+                List<Integer> leftResults = diffWaysToCompute(leftExpr);
+                List<Integer> rightResults = diffWaysToCompute(rightExpr);
+
+                // Combine results
+                for (int left : leftResults) {
+                    for (int right : rightResults) {
+                        int res = 0;
+                        if (c == '+') res = left + right;
+                        else if (c == '-') res = left - right;
+                        else if (c == '*') res = left * right;
+                        result.add(res);
+                    }
+                }
+            }
+        }
+
+        // Base case: expression is a single number
+        if (result.isEmpty()) {
+            result.add(Integer.parseInt(expression));
+        }
+
+        return result;
+        
+    }
 }
 
 
