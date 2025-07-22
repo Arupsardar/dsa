@@ -5958,6 +5958,29 @@ class MyStack {
         return result;
         
     }
+
+    public int maxNumOfMarkedIndices(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        int i = 0;         // Pointer for smaller half
+        int j = n / 2;     // Pointer for larger half
+        int pairs = 0;
+
+        while (i < n / 2 && j < n) {
+            if (2 * nums[i] <= nums[j]) {
+                // Found a valid pair
+                pairs++;
+                i++;
+                j++;
+            } else {
+                // Try a larger j
+                j++;
+            }
+        }
+
+        return 2 * pairs;
+    }
 }
 
 
