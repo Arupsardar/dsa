@@ -6017,6 +6017,30 @@ class MyStack {
     
         return result; 
      }
+
+
+     public boolean areSentencesSimilar(String sentence1, String sentence2) {
+        String[] words1 = sentence1.split(" ");
+        String[] words2 = sentence2.split(" ");
+
+        // Always let words1 be the shorter array
+        if (words1.length > words2.length) {
+            return areSentencesSimilar(sentence2, sentence1);
+        }
+
+        int i = 0; // matching prefix
+        while (i < words1.length && words1[i].equals(words2[i])) {
+            i++;
+        }
+
+        int j = 0; // matching suffix
+        while (j < words1.length - i && 
+            words1[words1.length - 1 - j].equals(words2[words2.length - 1 - j])) {
+            j++;
+        }
+
+        return i + j == words1.length;
+    }
 }
 
 
