@@ -6080,7 +6080,7 @@ class MyStack {
         return stack.pop(); 
       }
 
-      public int minDistance(String word1, String word2) {
+      public int minDistance2(String word1, String word2) {
         int m = word1.length();
         int n = word2.length();
 
@@ -6115,25 +6115,80 @@ class MyStack {
 
     public int minDistance(String word1, String word2) {
         int m = word1.length();
-    int n = word2.length();
-    
-    // DP array to store LCS length
-    int[][] dp = new int[m + 1][n + 1];
+        int n = word2.length();
+        
+        // DP array to store LCS length
+        int[][] dp = new int[m + 1][n + 1];
 
-    // Build LCS DP table
-    for (int i = 1; i <= m; i++) {
-        for (int j = 1; j <= n; j++) {
-            if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
-                dp[i][j] = 1 + dp[i - 1][j - 1];
-            } else {
-                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        // Build LCS DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
             }
         }
+
+        int lcs = dp[m][n];
+        return (m - lcs) + (n - lcs);
     }
 
-    int lcs = dp[m][n];
-    return (m - lcs) + (n - lcs);
+    /*
+     * 91. Decode Ways
+
+        You have intercepted a secret message encoded as a string of numbers. The message is decoded via the following mapping:
+
+        "1" -> 'A'
+
+        "2" -> 'B'
+
+        ...
+
+        "25" -> 'Y'
+
+        "26" -> 'Z'
+
+        However, while decoding the message, you realize that there are many different ways you can decode the message because some codes are contained in other codes ("2" and "5" vs "25").
+
+        For example, "11106" can be decoded into:
+
+        "AAJF" with the grouping (1, 1, 10, 6)
+        "KJF" with the grouping (11, 10, 6)
+        The grouping (1, 11, 06) is invalid because "06" is not a valid code (only "6" is valid).
+        Note: there may be strings that are impossible to decode.
+
+        Given a string s containing only digits, return the number of ways to decode it. If the entire string cannot be decoded in any valid way, return 0.
+
+        The test cases are generated so that the answer fits in a 32-bit integer.
+     */
+
+    public int numDecodings(String s) {
+        int n = s.length();
+        if (s == null || n == 0 || s.charAt(0) == '0') return 0;
+
+        int[] dp = new int[n + 1];
+        dp[0] = 1; // empty string
+        dp[1] = 1; // first character already checked not zero
+
+        for (int i = 2; i <= n; i++) {
+            int oneDigit = Integer.parseInt(s.substring(i - 1, i));
+            int twoDigit = Integer.parseInt(s.substring(i - 2, i));
+
+            if (oneDigit >= 1) {
+                dp[i] += dp[i - 1];
+            }
+
+            if (twoDigit >= 10 && twoDigit <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+
+        return dp[n];
     }
+
+    
 }
 
 
