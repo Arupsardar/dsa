@@ -6188,6 +6188,44 @@ class MyStack {
         return dp[n];
     }
 
+    /*
+     * 99. Recover Binary Search Tree
+
+            You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
+     */
+
+
+
+    TreeNode first = null;
+    TreeNode second = null;
+    TreeNode prev = new TreeNode(Integer.MIN_VALUE);
+    
+    public void recoverTree(TreeNode root) {
+        inorder(root);
+        // Swap the values of the two incorrect nodes
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+
+    private void inorder(TreeNode root) {
+        if (root == null) return;
+
+        inorder(root.left);
+
+        // If current node is less than previous, it's a violation
+        if (prev != null && root.val < prev.val) {
+            if (first == null) {
+                first = prev; // First time violation
+            }
+            second = root;   // Second time or continuous violation
+        }
+
+        prev = root;
+
+        inorder(root.right);
+    }
+
     
 }
 
