@@ -6437,6 +6437,40 @@ class MyStack {
         return (int) result * sign;
     }
 
+
+    private double[][] memo;
+
+    public double soupServings(int n) {
+        int units = (n + 24) / 25; // scale to 25 mL units (ceiling)
+        if (units >= 500) return 1.0; // optimization for large n
+
+        memo = new double[units + 1][units + 1];
+        for (int i = 0; i <= units; i++) {
+            for (int j = 0; j <= units; j++) {
+                memo[i][j] = -1.0;
+            }
+        }
+
+        return dfs(units, units);
+    }
+
+    private double dfs(int a, int b) {
+        if (a <= 0 && b <= 0) return 0.5; // both empty same turn
+        if (a <= 0) return 1.0;           // A empty first
+        if (b <= 0) return 0.0;           // B empty first
+
+        if (memo[a][b] >= 0) return memo[a][b];
+
+        double res = 0.0;
+        res += 0.25 * dfs(a - 4, b);     // 100 A, 0 B -> units: 4,0
+        res += 0.25 * dfs(a - 3, b - 1); // 75 A, 25 B -> 3,1
+        res += 0.25 * dfs(a - 2, b - 2); // 50 A, 50 B -> 2,2
+        res += 0.25 * dfs(a - 1, b - 3); // 25 A, 75 B -> 1,3
+
+        memo[a][b] = res;
+        return res;
+    }
+
     
 }
 
