@@ -6476,6 +6476,24 @@ class MyStack {
         return n > 0 && (n & (n - 1)) == 0;
     }
 
+
+    public boolean reorderedPowerOf2(int n) {
+        String target = countDigits(n);
+        
+        for (int i = 0; i < 31; i++) { // 2^0 to 2^30 fits in int
+            if (target.equals(countDigits(1 << i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String countDigits(int n) {
+        char[] arr = String.valueOf(n).toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
+    }
+
     
 }
 
