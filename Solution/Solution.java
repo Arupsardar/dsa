@@ -6326,7 +6326,7 @@ class MyStack {
     }
 
 
-    public int numOfUnplacedFruits(int[] fruits, int[] baskets) {
+    public int numOfUnplacedFruits2(int[] fruits, int[] baskets) {
         int n = fruits.length;
         boolean[] used = new boolean[baskets.length];
         int unplaced = 0;
@@ -6347,7 +6347,7 @@ class MyStack {
     }
 
 
-    public int numOfUnplacedFruits(int[] fruits, int[] baskets) {
+    public int numOfUnplacedFruits3(int[] fruits, int[] baskets) {
          int n = fruits.length;
         int[] segmentTree = new int[4 * n];
 
@@ -6492,6 +6492,47 @@ class MyStack {
         char[] arr = String.valueOf(n).toCharArray();
         Arrays.sort(arr);
         return new String(arr);
+    }
+
+
+    public int[] productQueries(int n, int[][] queries) {
+        final int MOD = 1_000_000_007;
+    
+        // Step 1: Get exponents of powers of two in n
+        List<Integer> exps = new ArrayList<>();
+        for (int bit = 0; bit < 32; bit++) { // n is int, so up to 31 bits
+            if (((n >> bit) & 1) == 1) {
+                exps.add(bit);
+            }
+        }
+        
+        // Step 2: Build prefix sum of exponents
+        int m = exps.size();
+        long[] pref = new long[m + 1];
+        for (int i = 0; i < m; i++) {
+            pref[i + 1] = pref[i] + exps.get(i);
+        }
+        
+        // Step 3: Process queries
+        int[] ans = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int l = queries[i][0];
+            int r = queries[i][1];
+            long sumExp = pref[r + 1] - pref[l];
+            ans[i] = (int) modPow(2, sumExp, MOD);
+        }
+        return ans;
+    }
+
+    private long modPow(long base, long exp, long mod) {
+        long res = 1 % mod;
+        base %= mod;
+        while (exp > 0) {
+            if ((exp & 1) == 1) res = (res * base) % mod;
+            base = (base * base) % mod;
+            exp >>= 1;
+        }
+        return res;
     }
 
     
