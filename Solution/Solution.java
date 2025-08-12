@@ -6535,6 +6535,34 @@ class MyStack {
         return res;
     }
 
+    private static final int MOD = 1_000_000_007;
+
+    public int numberOfWays(int n, int x) {
+       // 1. generate list of powers i^x <= n
+        List<Integer> powers = new ArrayList<>();
+        for (int i = 1; ; i++) {
+            long pow = 1;
+            for (int e = 0; e < x; e++) {
+                pow *= i;
+                if (pow > n) break;
+            }
+            if (pow > n) break;
+            powers.add((int) pow);
+        }
+
+        // 2. dp: number of ways to form sums up to n using unique powers
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+
+        for (int p : powers) {
+            for (int s = n; s >= p; s--) {
+                dp[s] = (dp[s] + dp[s - p]) % MOD;
+            }
+        }
+
+        return (int) dp[n]; 
+    }
+
     
 }
 
