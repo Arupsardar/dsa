@@ -6610,6 +6610,37 @@ class MyStack {
         return Integer.parseInt(new String(digits));
     }
 
+
+    public double new21Game(int n, int k, int maxPts) {
+        if (k == 0 || n >= k - 1 + maxPts) return 1.0;
+
+        double[] dp = new double[n + 1];
+        dp[0] = 1.0;
+
+        double window = 1.0; // sum of dp of previous maxPts states that are < k
+        double ans = 0.0;
+
+        for (int i = 1; i <= n; i++) {
+            dp[i] = window / maxPts;
+
+            if (i < k) {
+                // still drawing from i
+                window += dp[i];
+            } else {
+                // i is a terminal score (>= k)
+                ans += dp[i];
+            }
+
+            // remove the state that falls out of the window
+            int j = i - maxPts;
+            if (j >= 0) {
+                // only subtract dp[j] if j < k, since only those contributed to window
+                if (j < k) window -= dp[j];
+            }
+        }
+        return ans;
+    }
+
     
 }
 
