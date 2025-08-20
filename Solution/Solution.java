@@ -6703,6 +6703,27 @@ class MyStack {
         return ans;
     }
 
+    public int countSquares(int[][] matrix) {
+        int m = matrix.length, n = matrix[0].length;
+        int[] dp = new int[n + 1]; // previous row + guard
+        int ans = 0, prevDiag = 0; // prevDiag holds dp[i-1][j-1] from previous column
+
+        for (int i = 1; i <= m; i++) {
+            prevDiag = 0;
+            for (int j = 1; j <= n; j++) {
+                int temp = dp[j]; // store old dp[j] before overwriting (this is top for next diag)
+                if (matrix[i - 1][j - 1] == 1) {
+                    dp[j] = 1 + Math.min(Math.min(dp[j], dp[j - 1]), prevDiag);
+                    ans += dp[j];
+                } else {
+                    dp[j] = 0;
+                }
+                prevDiag = temp; // move diagonal for next cell
+            }
+        }
+        return ans;
+    }
+
     
 }
 
