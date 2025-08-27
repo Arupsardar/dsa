@@ -6852,6 +6852,63 @@ class MyStack {
         return maxArea;
     }
 
+    public int lenOfVDiagonal(int[][] grid) {
+        int n = grid.length, m = grid[0].length;
+        int maxLen = 0;
+
+        // Start from every cell == 1
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1) {
+                    for (int d = 0; d < 4; d++) {
+                        maxLen = Math.max(maxLen, dfs(grid, i, j, d, false, 1));
+                    }
+                }
+            }
+        }
+        return maxLen;
+    }
+
+    private static final int[][] DIRS = {
+        {1, 1},   // down-right
+        {1, -1},  // down-left
+        {-1, -1}, // up-left
+        {-1, 1}   // up-right
+    };
+
+    // Get clockwise turn direction
+    private static int clockwise(int d) {
+        return (d + 1) % 4;
+    }
+
+    private static int dfs(int[][] grid, int x, int y, int d, boolean turned, int expected) {
+        int n = grid.length, m = grid[0].length;
+
+        // Out of bounds
+        if (x < 0 || y < 0 || x >= n || y >= m) return 0;
+        // Value mismatch
+        if (grid[x][y] != expected) return 0;
+
+        // Compute next expected value in sequence (after 1 → 2 → 0 → 2 → 0 ...)
+        int nextExpected = (expected == 1) ? 2 : (expected == 2 ? 0 : 2);
+
+        // Move forward in current direction
+        int nx = x + DIRS[d][0];
+        int ny = y + DIRS[d][1];
+
+        int length = 1 + dfs(grid, nx, ny, d, turned, nextExpected);
+
+        // If not yet turned, try clockwise turn
+        if (!turned) {
+            int nd = clockwise(d);
+            int tx = x + DIRS[nd][0];
+            int ty = y + DIRS[nd][1];
+            length = Math.max(length, 1 + dfs(grid, tx, ty, nd, true, nextExpected));
+        }
+
+        return length;
+    }
+
     
 }
 
