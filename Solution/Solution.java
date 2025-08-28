@@ -6909,6 +6909,32 @@ class MyStack {
         return length;
     }
 
+    public int[][] sortMatrix(int[][] grid) {
+       int n = grid.length;
+        Map<Integer, PriorityQueue<Integer>> map = new HashMap<>();
+
+        // Store diagonals
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int key = i - j;
+                // For bottom-left (key >= 0) → max-heap, for top-right (key < 0) → min-heap
+                map.putIfAbsent(key, (key >= 0) ? 
+                    new PriorityQueue<>(Collections.reverseOrder()) : 
+                    new PriorityQueue<>());
+                map.get(key).offer(grid[i][j]);
+            }
+        }
+
+        // Refill grid with sorted diagonals
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int key = i - j;
+                grid[i][j] = map.get(key).poll();
+            }
+        }
+        return grid; 
+    }
+
     
 }
 
