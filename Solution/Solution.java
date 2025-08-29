@@ -6935,6 +6935,16 @@ class MyStack {
         return grid; 
     }
 
+    public long flowerGame(int n, int m) {
+        long oddN = (n + 1) / 2;     // count of odds in [1, n]
+        long evenN = n / 2;          // count of evens in [1, n]
+        long oddM = (m + 1) / 2;     // count of odds in [1, m]
+        long evenM = m / 2;          // count of evens in [1, m]
+
+        // Alice wins when one odd + one even
+        return oddN * evenM + evenN * oddM;
+    }
+
     
 }
 
