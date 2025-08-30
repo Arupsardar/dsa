@@ -6945,6 +6945,39 @@ class MyStack {
         return oddN * evenM + evenN * oddM;
     }
 
+    public List<String> restoreIpAddresses(String s) {
+       List<String> result = new ArrayList<>();
+        backtrack(s, 0, new ArrayList<>(), result);
+        return result; 
+    }
+
+    private void backtrack(String s, int index, List<String> path, List<String> result) {
+        // If we already have 4 parts and used up the whole string
+        if (path.size() == 4 && index == s.length()) {
+            result.add(String.join(".", path));
+            return;
+        }
+
+        // If parts exceed 4, stop
+        if (path.size() == 4) return;
+
+        // Try segments of length 1 to 3
+        for (int len = 1; len <= 3; len++) {
+            if (index + len > s.length()) break;
+
+            String segment = s.substring(index, index + len);
+
+            // Validate segment
+            if ((segment.startsWith("0") && segment.length() > 1) || Integer.parseInt(segment) > 255) {
+                continue;
+            }
+
+            path.add(segment);
+            backtrack(s, index + len, path, result);
+            path.remove(path.size() - 1);
+        }
+    }
+
     
 }
 
