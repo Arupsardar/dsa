@@ -7002,6 +7002,41 @@ class MyStack {
         return result;
     }
 
+    public double maxAverageRatio(int[][] classes, int extraStudents) {
+        PriorityQueue<ClassInfo> pq = new PriorityQueue<>((a, b) -> 
+            Double.compare(b.gain(), a.gain())); // max-heap by gain
+
+        for (int[] c : classes) {
+            pq.add(new ClassInfo(c[0], c[1]));
+        }
+
+        while (extraStudents-- > 0) {
+            ClassInfo cls = pq.poll();
+            cls.pass++;
+            cls.total++;
+            pq.add(cls);
+        }
+
+        double sum = 0.0;
+        for (ClassInfo cls : pq) {
+            sum += (double) cls.pass / cls.total;
+        }
+
+        return sum / classes.length;
+    }
+
+    static class ClassInfo {
+        int pass, total;
+        ClassInfo(int p, int t) {
+            pass = p;
+            total = t;
+        }
+
+        double gain() {
+            return (double)(pass + 1) / (total + 1) - (double)pass / total;
+        }
+    }
+
     
 }
 
