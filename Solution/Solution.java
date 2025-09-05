@@ -7110,6 +7110,20 @@ class MyStack {
         }
     }
 
+
+    public int makeTheIntegerZero(int num1, int num2) {
+        for (int k = 1; k <= 60; k++) {
+            long S = (long) num1 - (long) k * num2;  // use long to avoid overflow
+            if (S >= 0) {
+                int popcount = Long.bitCount(S);  // number of 1-bits in S
+                if (popcount <= k && k <= S) {
+                    return k;
+                }
+            }
+        }
+        return -1;
+    }
+
     
 }
 
