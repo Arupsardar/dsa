@@ -7186,6 +7186,33 @@ class MyStack {
         return new int[]{-1, -1};
     }
 
+    public int peopleAwareOfSecret(int n, int delay, int forget) {
+        int MOD = 1000000007;
+        long[] dp = new long[n + 1]; // dp[i] = number of people who learn secret on day i
+        dp[1] = 1; // on day 1, one person knows the secret
+        long share = 0;
+
+        for (int day = 2; day <= n; day++) {
+            // Add those who become eligible to share today
+            if (day - delay >= 1) {
+                share = (share + dp[day - delay]) % MOD;
+            }
+            // Remove those who forget today
+            if (day - forget >= 1) {
+                share = (share - dp[day - forget] + MOD) % MOD;
+            }
+            // Number of people who learn the secret today
+            dp[day] = share;
+        }
+
+        // Count people who still remember secret at day n
+        long ans = 0;
+        for (int day = n - forget + 1; day <= n; day++) {
+            if (day >= 1) ans = (ans + dp[day]) % MOD;
+        }
+        return (int) ans;
+    }
+
     
 }
 
