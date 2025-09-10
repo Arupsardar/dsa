@@ -7213,6 +7213,61 @@ class MyStack {
         return (int) ans;
     }
 
+    public int minimumTeachings(int n, int[][] languages, int[][] friendships) {
+        int m = languages.length; // number of users
+        // Convert each user's known languages into a set
+        List<Set<Integer>> userLangs = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            Set<Integer> set = new HashSet<>();
+            for (int lang : languages[i]) {
+                set.add(lang);
+            }
+            userLangs.add(set);
+        }
+
+        // Step 1: Identify problematic friendships
+        Set<Integer> problematicUsers = new HashSet<>();
+        for (int[] f : friendships) {
+            int u = f[0] - 1; // 1-indexed to 0-indexed
+            int v = f[1] - 1;
+            Set<Integer> setU = userLangs.get(u);
+            Set<Integer> setV = userLangs.get(v);
+
+            // check if they share a common language
+            boolean canCommunicate = false;
+            for (int lang : setU) {
+                if (setV.contains(lang)) {
+                    canCommunicate = true;
+                    break;
+                }
+            }
+            if (!canCommunicate) {
+                problematicUsers.add(u);
+                problematicUsers.add(v);
+            }
+        }
+
+        // If no problematic users → no need to teach anyone
+        if (problematicUsers.isEmpty()) return 0;
+
+        // Step 2: Count how many problematic users already know each language
+        int[] count = new int[n + 1]; // languages are 1-indexed
+        for (int user : problematicUsers) {
+            for (int lang : userLangs.get(user)) {
+                count[lang]++;
+            }
+        }
+
+        // Step 3: Find max overlap
+        int maxAlreadyKnow = 0;
+        for (int lang = 1; lang <= n; lang++) {
+            maxAlreadyKnow = Math.max(maxAlreadyKnow, count[lang]);
+        }
+
+        // Step 4: Answer = total problematic users − maxAlreadyKnow
+        return problematicUsers.size() - maxAlreadyKnow;
+    }
+
     
 }
 
