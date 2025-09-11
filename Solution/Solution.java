@@ -7268,6 +7268,36 @@ class MyStack {
         return problematicUsers.size() - maxAlreadyKnow;
     }
 
+    public String sortVowels(String s) {
+        Set<Character> vowels = new HashSet<>(Arrays.asList(
+            'a','e','i','o','u','A','E','I','O','U'
+        ));
+
+        // Collect vowels
+        List<Character> vowelList = new ArrayList<>();
+        for (char c : s.toCharArray()) {
+            if (vowels.contains(c)) {
+                vowelList.add(c);
+            }
+        }
+
+        // Sort vowels by ASCII
+        Collections.sort(vowelList);
+
+        // Rebuild string
+        StringBuilder result = new StringBuilder();
+        int j = 0;
+        for (char c : s.toCharArray()) {
+            if (vowels.contains(c)) {
+                result.append(vowelList.get(j++));
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
     
 }
 
