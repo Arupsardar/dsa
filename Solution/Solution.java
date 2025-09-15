@@ -7376,6 +7376,27 @@ class MyStack {
         return sb.toString();
     }
 
+    public int canBeTypedWords(String text, String brokenLetters) {
+        Set<Character> broken = new HashSet<>();
+        for (char c : brokenLetters.toCharArray()) {
+            broken.add(c);
+        }
+
+        String[] words = text.split(" ");
+        int count = 0;
+
+        for (String word : words) {
+            boolean valid = true;
+            for (char c : word.toCharArray()) {
+                if (broken.contains(c)) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) count++;
+        }
+        return count;
+    }
     
 }
 
