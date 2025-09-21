@@ -7757,3 +7757,73 @@ class Router {
         return low;
     }
 }
+
+
+class MovieRentingSystem {
+
+
+    
+    private final Map<String, Integer> priceMap = new HashMap<>();
+   
+    private final Map<Integer, TreeSet<int[]>> unrented = new HashMap<>();
+   
+
+   private final TreeSet<int[]> rented = new TreeSet<>((a, b) -> {
+        if (a[2] != b[2]) return a[2] - b[2];      // price
+        if (a[0] != b[0]) return a[0] - b[0];      // shop
+        return a[1] - b[1];                        // movie
+    });
+
+    public MovieRentingSystem(int n, int[][] entries) {
+        for (int[] e : entries) {
+            int shop = e[0], movie = e[1], price = e[2];
+            priceMap.put(key(shop, movie), price);
+            unrented.computeIfAbsent(movie, k -> new TreeSet<>((a, b) -> {
+                if (a[1] != b[1]) return a[1] - b[1];  // price
+                return a[0] - b[0];                    // shop
+            })).add(new int[]{shop, price});
+        }
+    }
+    
+    public List<Integer> search(int movie) {
+        List<Integer> result = new ArrayList<>();
+        if (!unrented.containsKey(movie)) return result;
+        Iterator<int[]> it = unrented.get(movie).iterator();
+        int count = 0;
+        while (it.hasNext() && count < 5) {
+            int[] entry = it.next();
+            result.add(entry[0]);
+            count++;
+        }
+        return result;
+    }
+    
+    public void rent(int shop, int movie) {
+        int price = priceMap.get(key(shop, movie));
+        unrented.get(movie).remove(new int[]{shop, price});  // remove from unrented
+        rented.add(new int[]{shop, movie, price}); 
+    }
+    
+    public void drop(int shop, int movie) {
+        int price = priceMap.get(key(shop, movie));
+        rented.remove(new int[]{shop, movie, price});        // remove from rented
+        unrented.get(movie).add(new int[]{shop, price}); 
+    }
+    
+    public List<List<Integer>> report() {
+        List<List<Integer>> result = new ArrayList<>();
+        Iterator<int[]> it = rented.iterator();
+        int count = 0;
+        while (it.hasNext() && count < 5) {
+            int[] entry = it.next();
+            result.add(Arrays.asList(entry[0], entry[1]));
+            count++;
+        }
+        return result;
+    }
+
+    private String key(int shop, int movie) {
+        return shop + "#" + movie;
+    }
+}
+
