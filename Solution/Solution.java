@@ -7533,6 +7533,135 @@ class Spreadsheet {
         }
         return getCellValue(parts[0]) + getCellValue(parts[1]);
     }
+
+
+    static class SegmentTree {
+        int n;
+        int[] tree;
+        final int INF = Integer.MAX_VALUE / 4;
+
+        SegmentTree(int[] arr) {
+            this.n = arr.length;
+            this.tree = new int[4 * n];
+            build(1, 0, n - 1, arr);
+        }
+
+        void build(int node, int l, int r, int[] arr) {
+            if (l == r) {
+                tree[node] = arr[l];
+                return;
+            }
+            int mid = (l + r) >>> 1;
+            build(node << 1, l, mid, arr);
+            build(node << 1 | 1, mid + 1, r, arr);
+            tree[node] = Math.min(tree[node << 1], tree[node << 1 | 1]);
+        }
+
+        int queryMin(int ql, int qr) {
+            return queryMin(1, 0, n - 1, ql, qr);
+        }
+
+        int queryMin(int node, int l, int r, int ql, int qr) {
+            if (ql > r || qr < l) return Integer.MAX_VALUE / 4;
+            if (ql <= l && r <= qr) return tree[node];
+            int mid = (l + r) >>> 1;
+            return Math.min(queryMin(node << 1, l, mid, ql, qr),
+                            queryMin(node << 1 | 1, mid + 1, r, ql, qr));
+        }
+    }
+    public String[] solve(int[] A, int[] B, int[][] queries) {
+       int N = A.length;
+        int M = B.length;
+
+        // position in A for each value
+        int[] posInA = new int[N + 1];
+        Arrays.fill(posInA, 0);
+        for (int i = 0; i < N; i++) posInA[A[i]] = i + 1;
+
+        // mapped array
+        int[] C = new int[M];
+        for (int i = 0; i < M; i++) {
+            int val = B[i];
+            if (val >= 1 && val <= N && posInA[val] != 0) C[i] = posInA[val];
+            else C[i] = 0;
+        }
+
+        // lists of indices
+        ArrayList<Integer>[] lists = new ArrayList[N + 1];
+        for (int v = 1; v <= N; v++) lists[v] = new ArrayList<>();
+        for (int i = 0; i < M; i++) {
+            if (C[i] != 0) lists[C[i]].add(i);
+        }
+
+        // nextIndex
+        int[] nextIndex = new int[M];
+        Arrays.fill(nextIndex, -1);
+        for (int i = 0; i < M; i++) {
+            if (C[i] == 0) continue;
+            int nextVal = (C[i] == N ? 1 : C[i] + 1);
+            ArrayList<Integer> nextList = lists[nextVal];
+            if (!nextList.isEmpty()) {
+                int lo = 0, hi = nextList.size() - 1, ans = -1;
+                while (lo <= hi) {
+                    int mid = (lo + hi) >>> 1;
+                    if (nextList.get(mid) > i) {
+                        ans = nextList.get(mid);
+                        hi = mid - 1;
+                    } else {
+                        lo = mid + 1;
+                    }
+                }
+                nextIndex[i] = ans;
+            }
+        }
+
+        // binary lifting
+        int LOG = 1;
+        while ((1 << LOG) <= N) LOG++;
+        int[][] up = new int[LOG][M];
+        for (int i = 0; i < M; i++) up[0][i] = nextIndex[i];
+        for (int k = 1; k < LOG; k++) {
+            for (int i = 0; i < M; i++) {
+                int mid = up[k - 1][i];
+                up[k][i] = (mid == -1) ? -1 : up[k - 1][mid];
+            }
+        }
+
+        // end[i] after N-1 jumps
+        int[] end = new int[M];
+        Arrays.fill(end, -1);
+        int steps = N - 1;
+        for (int i = 0; i < M; i++) {
+            if (C[i] == 0) continue;
+            int cur = i;
+            for (int b = 0; b < LOG && cur != -1; b++) {
+                if ((steps & (1 << b)) != 0) {
+                    cur = up[b][cur];
+                }
+            }
+            end[i] = cur;
+        }
+
+        // build segment tree
+        final int INF = Integer.MAX_VALUE / 4;
+        int[] endForSeg = new int[M];
+        for (int i = 0; i < M; i++) endForSeg[i] = (end[i] == -1 ? INF : end[i]);
+        SegmentTree seg = new SegmentTree(endForSeg);
+
+        // queries
+        String[] ans = new String[queries.length];
+        for (int qi = 0; qi < queries.length; qi++) {
+            int L = queries[qi][0];
+            int R = queries[qi][1];
+            int l = L - 1, r = R - 1;
+            if (l < 0) l = 0;
+            if (r >= M) r = M - 1;
+            if (l > r) { ans[qi] = "NO"; continue; }
+            int minEnd = seg.queryMin(l, r);
+            ans[qi] = (minEnd <= r ? "YES" : "NO");
+        }
+        return ans;
+    }
 }
 
 class Router {
