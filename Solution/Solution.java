@@ -7662,6 +7662,25 @@ class Spreadsheet {
         }
         return ans;
     }
+
+    public int maxFrequencyElements(int[] nums) {
+        Map<Integer, Integer> freq = new HashMap<>();
+       int maxFreq = 0;
+
+       // count frequencies
+       for (int num : nums) {
+           freq.put(num, freq.getOrDefault(num, 0) + 1);
+           maxFreq = Math.max(maxFreq, freq.get(num));
+       }
+
+       // sum frequencies of elements that have max frequency
+       int total = 0;
+       for (int val : freq.values()) {
+           if (val == maxFreq) total += val;
+       }
+
+       return total;
+   }
 }
 
 class Router {
