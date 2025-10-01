@@ -7821,6 +7821,18 @@ class Spreadsheet {
         return dp[0][n - 1];
     }
 
+    public int numWaterBottles(int numBottles, int numExchange) {
+       int ans =numBottles;
+        while(numBottles>=numExchange){
+            System.out.println(numBottles+"   "+numExchange);
+            int max=numBottles/numExchange;
+            int leftbut =numBottles%numExchange;
+            numBottles =max+leftbut;
+            ans +=max;
+        }
+        return  ans;
+    }
+
 }
 
 class Router {
