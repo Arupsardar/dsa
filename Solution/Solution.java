@@ -7833,6 +7833,21 @@ class Spreadsheet {
         return  ans;
     }
 
+    public int maxBottlesDrunk(int numBottles, int numExchange) {
+        int ans = numBottles;         // drink all initial bottles
+        int empty = numBottles;       // all bottles become empty
+        
+        while (empty >= numExchange) {
+            // exchange exactly numExchange empty bottles for 1 full bottle
+            empty -= numExchange;     
+            ans++;                    // drink the new bottle
+            empty++;                  // new bottle becomes empty after drinking
+            numExchange++;            // exchange rate increases
+        }
+        
+        return ans;
+    }
+
 }
 
 class Router {
