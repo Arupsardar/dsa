@@ -7898,7 +7898,7 @@ class Spreadsheet {
     
 
     private int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private int rows, cols;
+    // private int rows, cols;d
 
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         List<List<Integer>> result = new ArrayList<>();
@@ -7978,6 +7978,39 @@ class Spreadsheet {
         }
 
         return time;
+    }
+
+    public int[] avoidFlood(int[] rains) {
+        int n = rains.length;
+        int[] ans = new int[n];
+        Map<Integer, Integer> fullLakes = new HashMap<>(); // lake → last rained day
+        TreeSet<Integer> dryDays = new TreeSet<>(); // store indices of 0s (dry days)
+
+        for (int i = 0; i < n; i++) {
+            if (rains[i] == 0) {
+                dryDays.add(i);
+                ans[i] = 1; // placeholder (updated if used to dry specific lake)
+            } else {
+                ans[i] = -1;
+                int lake = rains[i];
+
+                // If lake was full before, find a dry day after last rain
+                if (fullLakes.containsKey(lake)) {
+                    Integer dryDay = dryDays.higher(fullLakes.get(lake));
+                    if (dryDay == null) {
+                        return new int[0]; // flood unavoidable
+                    }
+
+                    // Use this dry day to empty the lake
+                    ans[dryDay] = lake;
+                    dryDays.remove(dryDay);
+                }
+
+                fullLakes.put(lake, i); // mark lake as filled today
+            }
+        }
+
+        return ans;
     }
 
 }
