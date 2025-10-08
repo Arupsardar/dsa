@@ -8013,6 +8013,38 @@ class Spreadsheet {
         return ans;
     }
 
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+        int n = spells.length;
+        int m = potions.length;
+        int[] res = new int[n];
+
+        // Sort potions to allow binary search
+        Arrays.sort(potions);
+
+        for (int i = 0; i < n; i++) {
+            int spell = spells[i];
+            // Minimum required potion strength
+            long target = (success + spell - 1) / spell; // ceil(success / spell)
+            int idx = lowerBound(potions, target);
+            res[i] = m - idx; // number of potions >= target
+        }
+
+        return res;
+    }
+
+    private int lowerBound(int[] arr, long target) {
+        int left = 0, right = arr.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
 }
 
 class Router {
