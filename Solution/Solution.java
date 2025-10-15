@@ -8188,6 +8188,42 @@ class Spreadsheet {
         return false;
     }
 
+    public int maxIncreasingSubarrays(List<Integer> nums) {
+        int n = nums.size();
+        if (n < 2) return 0; // need at least 2 elements to form subarrays
+
+        int[] left = new int[n];  // length of increasing sequence ending at i
+        int[] right = new int[n]; // length of increasing sequence starting at i
+
+        // Compute increasing sequence lengths from left to right
+        left[0] = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums.get(i) > nums.get(i - 1))
+                left[i] = left[i - 1] + 1;
+            else
+                left[i] = 1;
+        }
+
+        // Compute increasing sequence lengths from right to left
+        right[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (nums.get(i) < nums.get(i + 1))
+                right[i] = right[i + 1] + 1;
+            else
+                right[i] = 1;
+        }
+
+        // Find the maximum k for which adjacent increasing subarrays exist
+        int maxK = 0;
+        for (int i = 0; i < n - 1; i++) {
+            int k = Math.min(left[i], right[i + 1]);
+            maxK = Math.max(maxK, k);
+        }
+
+        return maxK;
+
+    }
+
 }
 
 class Router {
