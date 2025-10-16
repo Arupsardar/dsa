@@ -8224,6 +8224,28 @@ class Spreadsheet {
 
     }
 
+    public int findSmallestInteger(int[] nums, int value) {
+        int n = nums.length;
+        int[] count = new int[value];
+
+        // Step 1: Count occurrences of each remainder
+        for (int num : nums) {
+            int r = ((num % value) + value) % value; // handle negatives
+            count[r]++;
+        }
+
+        // Step 2: Find smallest missing number
+        int mex = 0;
+        while (true) {
+            int r = mex % value;
+            if (count[r] == 0) break;
+            count[r]--;
+            mex++;
+        }
+
+        return mex;
+    }
+
 }
 
 class Router {
