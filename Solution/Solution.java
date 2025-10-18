@@ -8285,6 +8285,24 @@ class Spreadsheet {
         return ans;
     }
 
+    public int maxDistinctElements(int[] nums, int k) {
+        Arrays.sort(nums);
+        int prev = Integer.MIN_VALUE;
+        int count = 0;
+        
+        for (int num : nums) {
+            int start = num - k;
+            int end = num + k;
+            // Choose the smallest value > prev that’s still in [start, end]
+            int candidate = Math.max(start, prev + 1);
+            if (candidate <= end) {
+                count++;
+                prev = candidate;
+            }
+        }
+        return count;
+    }
+
 }
 
 class Router {
