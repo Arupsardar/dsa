@@ -8303,6 +8303,43 @@ class Spreadsheet {
         return count;
     }
 
+    public String findLexSmallestString(String s, int a, int b) {
+        Set<String> visited = new HashSet<>();
+        Queue<String> queue = new LinkedList<>();
+        String min = s;
+        queue.offer(s);
+        visited.add(s);
+
+        while (!queue.isEmpty()) {
+            String curr = queue.poll();
+
+            // Update lexicographically smallest string
+            if (curr.compareTo(min) < 0) {
+                min = curr;
+            }
+
+            // Operation 1: Add 'a' to all digits at odd indices
+            char[] chars = curr.toCharArray();
+            for (int i = 1; i < chars.length; i += 2) {
+                int newDigit = (chars[i] - '0' + a) % 10;
+                chars[i] = (char) ('0' + newDigit);
+            }
+            String added = new String(chars);
+
+            if (visited.add(added)) {
+                queue.offer(added);
+            }
+
+            // Operation 2: Rotate to the right by b positions
+            String rotated = curr.substring(curr.length() - b) + curr.substring(0, curr.length() - b);
+            if (visited.add(rotated)) {
+                queue.offer(rotated);
+            }
+        }
+
+        return min;
+    }
+
 }
 
 class Router {
