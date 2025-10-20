@@ -8340,6 +8340,19 @@ class Spreadsheet {
         return min;
     }
 
+    public int finalValueAfterOperations(String[] operations) {
+        int ans = 0;
+        for (String val : operations) {
+            if (val.equals("--X") || val.equals("X--")) {
+                ans--;
+            } else if (val.equals("++X") || val.equals("X++")) {
+                ans++;
+            }
+        }
+        return ans;
+
+    }
+
 }
 
 class Router {
