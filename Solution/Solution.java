@@ -8410,6 +8410,35 @@ class Spreadsheet {
         return true;
     }
 
+    public static int totalMoney(int n) {
+        int w = n/7;
+        int r = n % 7;
+        int sumFull = 28*w + 7*(w*(w-1)/2);
+        int SumRem = r*w + r*(r+1)/2;
+        return sumFull + SumRem;
+    }
+
+    public int totalMoney2(int n) {
+        int week =1;
+        int day =0;
+        int dayct =1;
+        int sum =0;
+        while(dayct<=n){
+            
+            sum =sum +week+day;
+            day++;
+            dayct++;
+            if(day == 7){
+                week++;
+                day =0;
+            }
+
+        }
+        return sum;
+
+        
+    }
+
 }
 
 class Router {
