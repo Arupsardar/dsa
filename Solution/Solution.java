@@ -8439,6 +8439,26 @@ class Spreadsheet {
         
     }
 
+    public int numberOfBeams(String[] bank) {
+        int prev = 0; // number of devices in the last non-empty row
+        int result = 0;
+
+        for (String row : bank) {
+            int count = 0;
+            // count number of devices ('1') in current row
+            for (char c : row.toCharArray()) {
+                if (c == '1') count++;
+            }
+
+            if (count > 0) {
+                result += prev * count;  // beams between prev and current
+                prev = count;             // update prev for next non-empty row
+            }
+        }
+
+        return result;
+    }
+
 }
 
 class Router {
