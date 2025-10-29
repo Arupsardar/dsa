@@ -8481,6 +8481,15 @@ class Spreadsheet {
         return count;
     }
 
+    public int smallestNumber(int n) {
+        int val = 1;
+        while (val < n) {
+            val = (val << 1) | 1; // 1, 3, 7, 15, ...
+            // beware of overflow if n is extremely large (bigger than ~2^62)
+        }
+        return val;
+    }
+
 }
 
 class Router {
