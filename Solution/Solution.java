@@ -8490,6 +8490,16 @@ class Spreadsheet {
         return val;
     }
 
+    public int minNumberOperations(int[] target) {
+        int operations = target[0]; // start with first element
+        for (int i = 1; i < target.length; i++) {
+            if (target[i] > target[i - 1]) {
+                operations += target[i] - target[i - 1];
+            }
+        }
+        return operations;
+    }
+
 }
 
 class Router {
