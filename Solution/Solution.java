@@ -8500,6 +8500,21 @@ class Spreadsheet {
         return operations;
     }
 
+    public int[] getSneakyNumbers(int[] nums) {
+        int n = nums.length;
+        int[] freq = new int[n];
+        List<Integer> result = new ArrayList<>();
+
+        for (int num : nums) {
+            freq[num]++;
+            if (freq[num] == 2) {
+                result.add(num);
+            }
+        }
+
+        return new int[]{result.get(0), result.get(1)};
+    }
+
 }
 
 class Router {
