@@ -8515,6 +8515,41 @@ class Spreadsheet {
         return new int[]{result.get(0), result.get(1)};
     }
 
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        // Step 1: Store all nums values in a HashSet for O(1) lookup
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) set.add(num);
+
+        // Step 2: Use a dummy node to handle cases where the head itself needs removal
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode curr = head;
+        ListNode prev = dummy;
+
+        // Step 3: Traverse and remove nodes whose values are in set
+        while (curr != null) {
+            if (set.contains(curr.val)) {
+                prev.next = curr.next; // remove node
+            } else {
+                prev = curr; // move prev only when current node is not removed
+            }
+            curr = curr.next;
+        }
+
+        // Step 4: Return the new head
+        return dummy.next;
+    }
+
+    // Utility function to print linked list (for testing)
+    public static void printList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val + (head.next != null ? " -> " : ""));
+            head = head.next;
+        }
+        System.out.println();
+    }
+
 }
 
 class Router {
