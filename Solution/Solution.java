@@ -8750,6 +8750,83 @@ class Spreadsheet {
         }
         return ans;
     }
+
+    static class DSU {
+        int[] parent, rank;
+        
+        DSU(int n) {
+            parent = new int[n + 1];
+            rank = new int[n + 1];
+            for (int i = 1; i <= n; i++) parent[i] = i;
+        }
+        
+        int find(int x) {
+            if (parent[x] != x)
+                parent[x] = find(parent[x]);
+            return parent[x];
+        }
+        
+        void union(int a, int b) {
+            int ra = find(a), rb = find(b);
+            if (ra == rb) return;
+            if (rank[ra] < rank[rb]) parent[ra] = rb;
+            else if (rank[ra] > rank[rb]) parent[rb] = ra;
+            else {
+                parent[rb] = ra;
+                rank[ra]++;
+            }
+        }
+    }
+
+    public int[] processQueries(int c, int[][] connections, int[][] queries) {
+        DSU dsu = new DSU(c);
+        
+        // Build connectivity using DSU
+        for (int[] conn : connections) {
+            dsu.union(conn[0], conn[1]);
+        }
+
+        // Map root -> TreeSet of online stations
+        Map<Integer, TreeSet<Integer>> gridOnline = new HashMap<>();
+        for (int i = 1; i <= c; i++) {
+            int root = dsu.find(i);
+            gridOnline.putIfAbsent(root, new TreeSet<>());
+            gridOnline.get(root).add(i);
+        }
+
+        boolean[] online = new boolean[c + 1];
+        Arrays.fill(online, true);
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int[] q : queries) {
+            int type = q[0];
+            int x = q[1];
+            int root = dsu.find(x);
+
+            if (type == 1) { // Maintenance check
+                if (online[x]) {
+                    result.add(x);
+                } else {
+                    TreeSet<Integer> set = gridOnline.get(root);
+                    if (set == null || set.isEmpty())
+                        result.add(-1);
+                    else
+                        result.add(set.first());
+                }
+            } else if (type == 2) { // Go offline
+                if (online[x]) {
+                    online[x] = false;
+                    gridOnline.get(root).remove(x);
+                }
+            }
+        }
+
+        // Convert result list to array
+        int[] ans = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) ans[i] = result.get(i);
+        return ans;
+    }
     
 
 }
