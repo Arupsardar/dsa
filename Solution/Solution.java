@@ -8887,6 +8887,31 @@ class Spreadsheet {
 
         return best;
     }
+
+    public int minimumOneBitOperations(int n) {
+        if (n == 0) return 0;
+        return (int) helper(n);
+    }
+
+    
+
+    
+
+    private long helper(int n) {
+        if (n == 0) return 0L;
+        // find highest power of two p = 2^k <= n
+        int k = 31 - Integer.numberOfLeadingZeros(n);
+        int p = 1 << k;
+        long fp = 2L * p - 1L; // f(p) = 2*p - 1
+
+        if (n == p) {
+            return fp;
+        } else {
+            int m = n - p; // remainder
+            return fp - helper(m);
+        }
+    }
+    
     
 
 }
