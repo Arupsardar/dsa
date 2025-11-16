@@ -9036,7 +9036,24 @@ class Spreadsheet {
         return ans;
     }
 
-    
+    public int numSub(String s) {
+        long count = 0;
+        long curr = 0;
+        long mod = 1000000007;
+
+        for (char c : s.toCharArray()) {
+            if (c == '1') {
+                curr++;                      // extend current streak of 1s
+                count = (count + curr) % mod; // add contribution
+            } else {
+                curr = 0;                    // reset on '0'
+            }
+        }
+
+        return (int) count;
+    }
+
+
     
     
 
