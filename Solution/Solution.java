@@ -9065,7 +9065,19 @@ class Spreadsheet {
              }
          }
          return true; 
-     }
+    }
+
+    public boolean isOneBitCharacter(int[] bits) {
+        int i = 0;
+        int n = bits.length;
+
+        while (i < n - 1) { // stop before the last bit
+            if (bits[i] == 1) i += 2; // two-bit char
+            else i += 1;              // one-bit char
+        }
+        
+        return i == n - 1;
+    }
 
 
     
