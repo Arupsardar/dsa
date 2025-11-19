@@ -9079,6 +9079,18 @@ class Spreadsheet {
         return i == n - 1;
     }
 
+    public int findFinalValue(int[] nums, int original) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) set.add(num);
+
+        // Keep doubling while present
+        while (set.contains(original)) {
+            original *= 2;
+        }
+
+        return original;
+    }
+
 
     
     
