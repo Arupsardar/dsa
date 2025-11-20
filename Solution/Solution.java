@@ -9091,6 +9091,38 @@ class Spreadsheet {
         return original;
     }
 
+    public int intersectionSizeTwo(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> {
+            if (a[1] != b[1]) return a[1] - b[1]; // sort by end
+            return b[0] - a[0];                  // if tie, start desc
+        });
+
+        int p1 = -1, p2 = -1; // last two chosen points
+        int count = 0;
+
+        for (int[] in : intervals) {
+            int start = in[0], end = in[1];
+
+            boolean hasP2 = (p2 >= start && p2 <= end);
+            boolean hasP1 = (p1 >= start && p1 <= end);
+
+            if (hasP2 && hasP1) {
+                continue; // already have 2 points
+            } else if (hasP1) {
+                // one point inside → need one more
+                count++;
+                p2 = p1;
+                p1 = end;
+            } else {
+                // no points inside → add 2 points
+                count += 2;
+                p2 = end - 1;
+                p1 = end;
+            }
+        }
+        return count;
+    }
+
 
     
     
