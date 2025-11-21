@@ -9123,6 +9123,43 @@ class Spreadsheet {
         return count;
     }
 
+    public int countPalindromicSubsequence(String s) {
+        int n = s.length();
+        int[] first = new int[26];
+        int[] last = new int[26];
+        Arrays.fill(first, -1);
+        
+        // record first and last positions
+        for (int i = 0; i < n; i++) {
+            int c = s.charAt(i) - 'a';
+            if (first[c] == -1) first[c] = i;
+            last[c] = i;
+        }
+
+        int ans = 0;
+
+        // For each character as outer palindrome character
+        for (int ch = 0; ch < 26; ch++) {
+            if (first[ch] != -1 && last[ch] != -1 && last[ch] - first[ch] >= 2) {
+                boolean[] seen = new boolean[26];
+                
+                // count distinct middle characters
+                for (int i = first[ch] + 1; i < last[ch]; i++) {
+                    seen[s.charAt(i) - 'a'] = true;
+                }
+
+                int unique = 0;
+                for (boolean b : seen) {
+                    if (b) unique++;
+                }
+                
+                ans += unique;
+            }
+        }
+
+        return ans;
+    }
+
 
     
     
