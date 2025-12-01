@@ -9329,6 +9329,35 @@ class Router {
 
         return low;
     }
+
+    public long maxRunTime(int n, int[] batteries) {
+        long sum = 0;
+        for (int b : batteries) sum += b;
+
+        long left = 0, right = sum / n; // upper bound
+        long ans = 0;
+
+        while (left <= right) {
+            long mid = left + (right - left) / 2; // candidate time T
+
+            if (canRun(mid, n, batteries)) {
+                ans = mid;
+                left = mid + 1;  // try longer time
+            } else {
+                right = mid - 1; // try shorter time
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canRun(long T, int n, int[] batteries) {
+        long total = 0;
+        for (int b : batteries) {
+            total += Math.min(b, T);
+        }
+        return total >= (long) n * T;
+    }
 }
 
 
